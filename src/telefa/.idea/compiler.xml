@@ -22,7 +22,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="telefa" />
+        <module name="common" />
+        <module name="membership" />
+        <module name="membership-impl" />
+        <module name="portal" />
       </profile>
     </annotationProcessing>
   </component>
