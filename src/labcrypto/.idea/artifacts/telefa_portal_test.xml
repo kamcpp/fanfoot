@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="telefa-portal-test">
+    <output-path>$PROJECT_DIR$/out/artifacts/telefa_portal_test</output-path>
+    <root id="archive" name="telefa-portal-test.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="portal-test" />
+          <element id="module-output" name="domain-telefa" />
+          <element id="directory" name="META-INF">
+            <element id="file-copy" path="$PROJECT_DIR$/portal-test/META-INF/persistence.xml" output-file-name="persistence.xml" />
+          </element>
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="portal-test/web/Web" />
+    </root>
+  </artifact>
+</component>
