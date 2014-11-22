@@ -62,7 +62,6 @@ public class NewsAgenciesBean {
     }
 
     public void delete(UUID id) throws SystemException {
-        NewsAgency newsAgency = (NewsAgency) entityManager.createQuery("SELECT newsAgency FROM NewsAgency newsAgency WHERE newsAgency.id = :id").setParameter("id", id).getSingleResult();
         System.out.println("------> " + id);
         try {
             userTransaction.begin();

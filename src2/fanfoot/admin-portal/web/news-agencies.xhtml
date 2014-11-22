@@ -11,6 +11,7 @@
 <h:body>
     <ui:composition template="templates/layout.xhtml">
         <ui:define name="content">
+            <p:tooltip/>
             <h1 class="heading">News Agencies</h1>
             <h:form id="form-list">
                 <p:commandButton update=":news-agency-dialog" value="ADD"
@@ -36,7 +37,8 @@
                                          oncomplete="PF('newsAgencyDialog').show();"/>
                     </p:column>
                     <p:column headerText="DELETE" style="text-align: center">
-                        <p:commandButton value="DELETE" update=":news-agency-dialog" onclick="return confirm('Yes!');"
+                        <p:commandButton value="DELETE" onclick="return confirm('Are you sure?');"
+                                         update=":form-list:news-agencies-dt"
                                          actionListener="#{newsAgenciesBean.delete(newsAgency.id)}"/>
                     </p:column>
                 </p:dataTable>
@@ -62,7 +64,7 @@
                         <p:row>
                             <p:commandButton value="CANCEL" style="color: red;"
                                              onclick="PF('newsAgencyDialog').hide();"/>
-                            <p:commandButton value="CREATE" update="growl,:form-list:news-agencies-dt"
+                            <p:commandButton value="SAVE" style="color: green;" update="growl,:form-list:news-agencies-dt"
                                              actionListener="#{newsAgenciesBean.saveOrUpdateNewsAgency()}"
                                              oncomplete="handleNewsAgencyResponse(xhr, status, args);"/>
                         </p:row>
