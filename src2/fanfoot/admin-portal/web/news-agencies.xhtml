@@ -4,10 +4,72 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
 </h:head>
 <h:body>
-    <h:outputLabel value="HELLO"></h:outputLabel>
+    <ui:composition template="templates/layout.xhtml">
+        <ui:define name="content">
+            <h1 class="heading">News Agencies</h1>
+            <h:form id="form-list">
+                <p:commandButton update=":add-news-agency-dialog" value="ADD" onclick="PF('addNewsAgencyDialog').show();"/>
+                <br/>
+                <p:dataTable id="news-agencies-dt" var="newsAgency" value="#{newsAgenciesBean.newsAgencies}">
+                    <p:column headerText="Local Name">
+                        <h:outputText value="#{newsAgency.localName}"/>
+                    </p:column>
+                    <p:column headerText="English Name">
+                        <h:outputText value="#{newsAgency.englishName}"/>
+                    </p:column>
+                    <p:column headerText="Qulified Name">
+                        <h:outputText value="#{newsAgency.englishQualifiedName}"/>
+                    </p:column>
+                    <p:column headerText="Website">
+                        <h:outputText value="#{newsAgency.website}"/>
+                    </p:column>
+                    <p:column headerText="EDIT">
+                        <p:commandButton value="EDIT" update=":add-news-agency-dialog" actionListener="#{newsAgenciesBean.select(newsAgency.id)}" oncomplete="PF('addNewsAgencyDialog').show();"/>
+                    </p:column>
+                    <p:column headerText="DELETE">
+                        <p:commandButton value="DELETE" actionListener="alert('Ok');"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:dialog id="add-news-agency-dialog" header="Add News Agency" widgetVar="addNewsAgencyDialog"
+                      modal="true" appendToBody="true" width="450px" height="350px"
+                      closable="false" resizable="false" onHide="PF('addNewsAgencyDialog').jq.find('input,textarea').val('');">
+                <h:form>
+                    <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
+                    <p:panelGrid columns="2">
+                        Local Name <p:inputText value="#{newsAgenciesBean.localName}" required="true" requiredMessage="Local name is required."/><br/>
+                        English Name <p:inputText value="#{newsAgenciesBean.englishName}" required="true" requiredMessage="English name is required."/><br/>
+                        Qulified Name <p:inputText value="#{newsAgenciesBean.qualifiedEnglishName}"
+                                                   required="true" requiredMessage="Qualified english name is required."/><br/>
+                        Website <p:inputText value="#{newsAgenciesBean.website}" required="true" requiredMessage="Website is required."/><br/>
+                        Description <p:inputTextarea value="#{newsAgenciesBean.description}" required="false"/><br/>
+                        <p:row>
+                            <p:commandButton value="CANCEL" style="color: red;"
+                                             onclick="PF('addNewsAgencyDialog').hide();"/>
+                            <p:commandButton value="CREATE" update="growl,:form-list:news-agencies-dt"
+                                             actionListener="#{newsAgenciesBean.addNewsAgency()}"
+                                             oncomplete="handleAddNewsAgencyResponse(xhr, status, args);"/>
+                        </p:row>
+
+                    </p:panelGrid>
+                </h:form>
+                <script type="text/javascript">
+                    function handleAddNewsAgencyResponse(xhr, status, args) {
+                        if (args.validationFailed || !args.added) {
+                            PF('addNewsAgencyDialog').jq.effect("shake", {times: 5}, 100);
+                        }
+                        else {
+                            PF('addNewsAgencyDialog').hide();
+                        }
+                    }
+                </script>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>
