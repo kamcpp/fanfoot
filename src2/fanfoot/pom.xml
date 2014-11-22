@@ -10,6 +10,10 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>domain</module>
+        <module>biz-api</module>
+        <module>biz</module>
+        <module>common</module>
+        <module>admin-portal</module>
     </modules>
 
 
