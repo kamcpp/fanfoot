@@ -44,7 +44,7 @@ public class News {
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "image_data", nullable = true)
     private byte[] imageData;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "news_agency_id", nullable = false)
     private NewsAgency newsAgency;
     @OneToOne(fetch = FetchType.LAZY)

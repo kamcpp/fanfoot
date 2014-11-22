@@ -2,12 +2,12 @@ package ir.telefa.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@Entity
+@Table(name = "role", schema = "public")
 public class Role {
     @Id
     @NotNull

@@ -6,6 +6,7 @@ import org.primefaces.context.RequestContext;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.NotSupportedException;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @ManagedBean
+@SessionScoped
 public class NewsAgenciesBean {
 
     @PersistenceContext(unitName = "fanfoot")
@@ -25,89 +27,53 @@ public class NewsAgenciesBean {
     @Resource
     private UserTransaction userTransaction;
 
-    private UUID id;
-    private String localName;
-    private String englishName;
-    private String qualifiedEnglishName;
-    private String website;
-    private String description;
+    private NewsAgency newsAgency;
 
-    public UUID getId() {
-        return id;
+    public NewsAgenciesBean() {
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public NewsAgency getNewsAgency() {
+        return newsAgency;
     }
 
-    public String getLocalName() {
-        return localName;
-    }
-
-    public void setLocalName(String localName) {
-        this.localName = localName;
-    }
-
-    public String getEnglishName() {
-        return englishName;
-    }
-
-    public void setEnglishName(String englishName) {
-        this.englishName = englishName;
-    }
-
-    public String getQualifiedEnglishName() {
-        return qualifiedEnglishName;
-    }
-
-    public void setQualifiedEnglishName(String qualifiedEnglishName) {
-        this.qualifiedEnglishName = qualifiedEnglishName;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void addNewsAgency() throws SystemException, NotSupportedException {
-        NewsAgency newsAgency = new NewsAgency();
-        newsAgency.setDescription(description);
-        newsAgency.setEnglishName(englishName);
-        newsAgency.setEnglishQualifiedName(qualifiedEnglishName);
-        newsAgency.setLocalName(localName);
-        newsAgency.setWebsite(website);
+    public void saveOrUpdateNewsAgency() throws SystemException {
         try {
             userTransaction.begin();
-            entityManager.persist(newsAgency);
+            if (newsAgency.getId() == null) {
+                entityManager.persist(newsAgency);
+            } else {
+                entityManager.merge(newsAgency);
+            }
             userTransaction.commit();
         } catch (Exception e) {
             userTransaction.rollback();
         }
-        RequestContext.getCurrentInstance().addCallbackParam("added", true);
+        RequestContext.getCurrentInstance().addCallbackParam("processed", true);
+    }
+
+    public void prepareForAdd() {
+        if (newsAgency == null || (newsAgency != null && newsAgency.getId() != null)) {
+            newsAgency = new NewsAgency();
+        }
     }
 
     public void select(UUID id) {
-        NewsAgency newsAgency = (NewsAgency) entityManager.createQuery("SELECT newsAgency FROM NewsAgency newsAgency WHERE newsAgency.id = ?").setParameter(1, id).getSingleResult();
-        this.id = id;
-        this.description = newsAgency.getDescription();
-        this.englishName = newsAgency.getEnglishName();
-        this.localName = newsAgency.getLocalName();
-        this.qualifiedEnglishName = newsAgency.getEnglishQualifiedName();
-        this.website = newsAgency.getWebsite();
+        newsAgency = (NewsAgency) entityManager.createQuery("SELECT newsAgency FROM NewsAgency newsAgency WHERE newsAgency.id = :id").setParameter("id", id).getSingleResult();
+    }
+
+    public void delete(UUID id) throws SystemException {
+        NewsAgency newsAgency = (NewsAgency) entityManager.createQuery("SELECT newsAgency FROM NewsAgency newsAgency WHERE newsAgency.id = :id").setParameter("id", id).getSingleResult();
+        System.out.println("------> " + id);
+        try {
+            userTransaction.begin();
+            entityManager.createQuery("DELETE FROM NewsAgency newsAgency WHERE newsAgency.id = :id").setParameter("id", id).executeUpdate();
+            userTransaction.commit();
+        } catch (Exception e) {
+            userTransaction.rollback();
+        }
     }
 
     public List getNewsAgencies() {
-        return entityManager.createQuery("SELECT newsAgency FROM NewsAgency newsAgency").getResultList();
+        return entityManager.createQuery("SELECT newsAgency FROM NewsAgency newsAgency ORDER BY newsAgency.englishQualifiedName").getResultList();
     }
 }

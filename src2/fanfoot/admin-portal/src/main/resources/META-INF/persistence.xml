@@ -5,6 +5,12 @@
         <jta-data-source>java:jboss/datasources/fanfoot</jta-data-source>
         <non-jta-data-source>java:jboss/datasources/fanfoot</non-jta-data-source>
         <class>ir.telefa.domain.NewsAgency</class>
+        <class>ir.telefa.domain.News</class>
+        <class>ir.telefa.domain.Question</class>
+        <class>ir.telefa.domain.Option</class>
+        <class>ir.telefa.domain.Role</class>
+        <class>ir.telefa.domain.User</class>
+        <class>ir.telefa.domain.Team</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             <property name="hibernate.show_sql" value="true"/>
