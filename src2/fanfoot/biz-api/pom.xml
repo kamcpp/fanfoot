@@ -11,5 +11,11 @@
 
     <artifactId>biz-api</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>fanfoot.ir</groupId>
+            <artifactId>domain</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

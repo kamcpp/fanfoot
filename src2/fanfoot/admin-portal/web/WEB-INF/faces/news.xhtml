@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+    <ui:composition template="templates/layout.xhtml">
+        <ui:define name="head">
+            <title>News - FanFoot Admin Portal</title>
+        </ui:define>
+        <ui:define name="content">
+            <h1 class="heading">News</h1>
+            <h:form id="form-list">
+                <p:commandButton style="margin-right: 20px;" value="REFRESH" update="list-dt,number-of-messages" /> <h:outputLabel id="number-of-messages" value="#{newsBean.numberOfShownNews} Shown News" />
+                <p:dataTable id="list-dt" var="news" value="#{newsBean.dataModel}"
+                        lazy="true" paginator="true" rows="5"
+                        paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                	    rowsPerPageTemplate="5,10,20,50,100">
+                    <p:column headerText="Publish Date">
+                        <h:outputText value="#{newsBean.convertTimeWithTimeZome(news.publishDate)}"/>
+                    </p:column>
+                    <p:column headerText="Source Publish Date">
+                        <h:outputText value="#{newsBean.convertTimeWithTimeZome(news.sourcePublishDate)}"/>
+                    </p:column>
+                    <p:column headerText="News Agency">
+                        <h:outputText value="#{news.newsAgency.localName}"/>
+                    </p:column>
+                    <p:column headerText="Title">
+                        <h:outputText value="#{news.title}"/>
+                    </p:column>
+                    <p:column headerText="DELETE" style="text-align: center">
+                        <p:commandButton value="DELETE" onclick="return confirm('Are you sure?');"
+                                         update=":form-list:list-dt"
+                                         actionListener="#{newsBean.delete(news.id)}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

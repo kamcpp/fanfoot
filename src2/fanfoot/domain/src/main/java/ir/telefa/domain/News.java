@@ -4,6 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -40,16 +42,24 @@ public class News {
     private String link;
     @Column(name = "source_link", length = 2048, nullable = true)
     private String sourceLink;
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "image_data", nullable = true)
-    private byte[] imageData;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @Column(name = "has_image", nullable = false)
+    private boolean hasImage;
+    @Column(name = "has_video", nullable = false)
+    private boolean hasVideo;
+    @Column(name = "shown", nullable = false)
+    private boolean shown;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "news_agency_id", nullable = false)
     private NewsAgency newsAgency;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", nullable = true)
     private Question question;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "news__tag",
+            schema = "public",
+            joinColumns = @JoinColumn(name = "news_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", nullable = false))
+    private Set<Tag> tags;
 
     public UUID getId() {
         return id;
@@ -155,12 +165,28 @@ public class News {
         this.sourceLink = sourceLink;
     }
 
-    public byte[] getImageData() {
-        return imageData;
+    public boolean isHasImage() {
+        return hasImage;
     }
 
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
+    public void setHasImage(boolean hasImage) {
+        this.hasImage = hasImage;
+    }
+
+    public boolean isHasVideo() {
+        return hasVideo;
+    }
+
+    public void setHasVideo(boolean hasVideo) {
+        this.hasVideo = hasVideo;
+    }
+
+    public boolean isShown() {
+        return shown;
+    }
+
+    public void setShown(boolean shown) {
+        this.shown = shown;
     }
 
     public NewsAgency getNewsAgency() {
@@ -177,5 +203,16 @@ public class News {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public Set<Tag> getTags() {
+        if(tags == null) {
+            tags = new HashSet<>();
+        }
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }

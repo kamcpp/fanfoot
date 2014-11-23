@@ -10,15 +10,17 @@
 </h:head>
 <h:body>
     <ui:composition template="templates/layout.xhtml">
+        <ui:define name="head">
+            <title>News Agency - FanFoot Admin Portal</title>
+        </ui:define>
         <ui:define name="content">
-            <p:tooltip/>
             <h1 class="heading">News Agencies</h1>
             <h:form id="form-list">
-                <p:commandButton update=":news-agency-dialog" value="ADD"
-                                 actionListener="#{newsAgenciesBean.prepareForAdd()}"
-                                 oncomplete="PF('newsAgencyDialog').show();"/>
+                <p:commandButton update=":edit-dialog" value="ADD NEWS AGENCY"
+                                 actionListener="#{newsAgencyBean.prepareForAdd()}"
+                                 oncomplete="PF('editDialog').show();"/>
                 <br/>
-                <p:dataTable id="news-agencies-dt" var="newsAgency" value="#{newsAgenciesBean.newsAgencies}">
+                <p:dataTable id="list-dt" var="newsAgency" value="#{newsAgencyBean.all}">
                     <p:column headerText="Local Name">
                         <h:outputText value="#{newsAgency.localName}"/>
                     </p:column>
@@ -32,52 +34,52 @@
                         <h:outputText value="#{newsAgency.website}"/>
                     </p:column>
                     <p:column headerText="EDIT" style="text-align: center">
-                        <p:commandButton value="EDIT" update=":news-agency-dialog"
-                                         actionListener="#{newsAgenciesBean.select(newsAgency.id)}"
-                                         oncomplete="PF('newsAgencyDialog').show();"/>
+                        <p:commandButton value="EDIT" update=":edit-dialog"
+                                         actionListener="#{newsAgencyBean.select(newsAgency.id)}"
+                                         oncomplete="PF('editDialog').show();"/>
                     </p:column>
                     <p:column headerText="DELETE" style="text-align: center">
                         <p:commandButton value="DELETE" onclick="return confirm('Are you sure?');"
-                                         update=":form-list:news-agencies-dt"
-                                         actionListener="#{newsAgenciesBean.delete(newsAgency.id)}"/>
+                                         update=":form-list:list-dt"
+                                         actionListener="#{newsAgencyBean.delete(newsAgency.id)}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>
-            <p:dialog id="news-agency-dialog" header="Add/Edit News Agency" widgetVar="newsAgencyDialog"
+            <p:dialog id="edit-dialog" header="Add/Edit News Agency" widgetVar="editDialog"
                       modal="true" appendToBody="true" width="450px" height="380px"
                       closable="false" resizable="false">
                 <h:form>
                     <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
                     <p:panelGrid columns="2">
-                        ID <p:inputText value="#{newsAgenciesBean.newsAgency.id}" disabled="true"/><br/>
-                        Local Name <p:inputText value="#{newsAgenciesBean.newsAgency.localName}" required="true"
+                        ID <p:inputText value="#{newsAgencyBean.newsAgency.id}" disabled="true"/><br/>
+                        Local Name <p:inputText value="#{newsAgencyBean.newsAgency.localName}" required="true"
                                                 requiredMessage="Local name is required."/><br/>
-                        English Name <p:inputText value="#{newsAgenciesBean.newsAgency.englishName}" required="true"
+                        English Name <p:inputText value="#{newsAgencyBean.newsAgency.englishName}" required="true"
                                                   requiredMessage="English name is required."/><br/>
-                        Qulified Name <p:inputText value="#{newsAgenciesBean.newsAgency.englishQualifiedName}"
+                        Qulified Name <p:inputText value="#{newsAgencyBean.newsAgency.englishQualifiedName}"
                                                    required="true"
                                                    requiredMessage="English qualified name is required."/><br/>
-                        Website <p:inputText value="#{newsAgenciesBean.newsAgency.website}" required="true"
+                        Website <p:inputText value="#{newsAgencyBean.newsAgency.website}" required="true"
                                              requiredMessage="Website is required."/><br/>
-                        Description <p:inputTextarea value="#{newsAgenciesBean.newsAgency.description}"
+                        Description <p:inputTextarea value="#{newsAgencyBean.newsAgency.description}"
                                                      required="false"/><br/>
                         <p:row>
                             <p:commandButton value="CANCEL" style="color: red;"
-                                             onclick="PF('newsAgencyDialog').hide();"/>
-                            <p:commandButton value="SAVE" style="color: green;" update="growl,:form-list:news-agencies-dt"
-                                             actionListener="#{newsAgenciesBean.saveOrUpdateNewsAgency()}"
-                                             oncomplete="handleNewsAgencyResponse(xhr, status, args);"/>
+                                             onclick="PF('editDialog').hide();"/>
+                            <p:commandButton value="SAVE" style="color: green;" update="growl,:form-list:list-dt"
+                                             actionListener="#{newsAgencyBean.saveOrUpdate()}"
+                                             oncomplete="handleResponse(xhr, status, args);"/>
                         </p:row>
 
                     </p:panelGrid>
                 </h:form>
                 <script type="text/javascript">
-                    function handleNewsAgencyResponse(xhr, status, args) {
+                    function handleResponse(xhr, status, args) {
                         if (args.validationFailed || !args.processed) {
-                            PF('newsAgencyDialog').jq.effect("shake", {times: 5}, 100);
+                            PF('editDialog').jq.effect("shake", {times: 5}, 100);
                         }
                         else {
-                            PF('newsAgencyDialog').hide();
+                            PF('editDialog').hide();
                         }
                     }
                 </script>

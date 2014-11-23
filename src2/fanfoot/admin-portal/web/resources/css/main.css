@@ -76,15 +76,7 @@ button {
     padding-bottom: 10px;
 }
 
-#right-panel ul li:hover {
-    background-color: darkgray;
-}
-
 #right-panel ul li a {
     text-decoration: none;
     color: white;
-}
-
-#right-panel ul li a:hover {
-    color: darkslateblue;
 }

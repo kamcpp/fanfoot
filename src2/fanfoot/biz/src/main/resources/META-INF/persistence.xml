@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
     <persistence-unit name="fanfoot">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/fanfoot</jta-data-source>
         <non-jta-data-source>java:jboss/datasources/fanfoot</non-jta-data-source>
         <class>ir.telefa.domain.NewsAgency</class>
@@ -11,10 +11,13 @@
         <class>ir.telefa.domain.Role</class>
         <class>ir.telefa.domain.User</class>
         <class>ir.telefa.domain.Team</class>
+        <class>ir.telefa.domain.Tag</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="hibernate.format_sql" value="false"/>
+            <property name="hibernate.use_sql_comments" value="false"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
     </persistence-unit>
 </persistence>
