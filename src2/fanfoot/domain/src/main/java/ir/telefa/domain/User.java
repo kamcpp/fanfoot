@@ -73,10 +73,10 @@ public class User {
     private String secondEmail;
     @Column(name = "about_me", length = 4096, nullable = true)
     private String aboutMe;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", nullable = true)
     private Team team;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "site_user__role",
             schema = "public",
             joinColumns = @JoinColumn(name = "site_user_id", nullable = false),

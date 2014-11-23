@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+    <ui:composition template="templates/layout.xhtml">
+        <ui:define name="head">
+            <title>Login - FanFoot Admin Portal</title>
+        </ui:define>
+        <ui:define name="content">
+            <h:form id="login-form">
+                <p:panel footer="Login">
+                    <f:facet name="header" style="display: inline;">
+                        <h:outputLabel value="Login please!" />
+                    </f:facet>
+                    <p:panelGrid columns="2">
+                        Username <p:inputText value="#{loginBean.username}"/><br/>
+                        Password <p:password value="#{loginBean.password}"/><br/>
+                        <p:row>
+                            <p:selectBooleanCheckbox value="#{loginBean.rememberMe}"/> Remeber Me
+                        </p:row>
+                        <p:row>
+                            <p:commandButton value="LOGIN" actionListener="#{loginBean.processLogin()}"/>
+                        </p:row>
+                    </p:panelGrid>
+                    <f:facet name="footer">
+                        <a href="#">Forgot your password?</a>
+                    </f:facet>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

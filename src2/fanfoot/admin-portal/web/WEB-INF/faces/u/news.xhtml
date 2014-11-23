@@ -9,7 +9,7 @@
 <h:head>
 </h:head>
 <h:body>
-    <ui:composition template="templates/layout.xhtml">
+    <ui:composition template="../templates/layout.xhtml">
         <ui:define name="head">
             <title>News - FanFoot Admin Portal</title>
         </ui:define>
@@ -21,17 +21,20 @@
                         lazy="true" paginator="true" rows="5"
                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                 	    rowsPerPageTemplate="5,10,20,50,100">
-                    <p:column headerText="Publish Date">
+                    <p:column headerText="Publish Date" style="text-align: center;">
                         <h:outputText value="#{newsBean.convertTimeWithTimeZome(news.publishDate)}"/>
                     </p:column>
-                    <p:column headerText="Source Publish Date">
+                    <p:column headerText="Source Publish Date" style="text-align: center;">
                         <h:outputText value="#{newsBean.convertTimeWithTimeZome(news.sourcePublishDate)}"/>
                     </p:column>
-                    <p:column headerText="News Agency">
+                    <p:column headerText="News Agency" style="text-align: center;">
                         <h:outputText value="#{news.newsAgency.localName}"/>
                     </p:column>
                     <p:column headerText="Title">
                         <h:outputText value="#{news.title}"/>
+                    </p:column>
+                    <p:column headerText="Link" style="text-align: center;">
+                        <h:outputLink style="text-decoration: none" value="#{news.link}" target="_blank">Link</h:outputLink>
                     </p:column>
                     <p:column headerText="DELETE" style="text-align: center">
                         <p:commandButton value="DELETE" onclick="return confirm('Are you sure?');"

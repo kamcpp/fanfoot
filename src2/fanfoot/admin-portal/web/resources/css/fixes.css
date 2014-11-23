@@ -1,0 +1,8 @@
+.ui-panelgrid td, .ui-panelgrid tr {
+    border-style: none !important;
+    background-color: transparent !important;
+}
+
+.ui-helper-clearfix:after {
+    display: inline !important;
+}
