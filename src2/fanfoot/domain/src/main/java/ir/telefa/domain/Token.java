@@ -17,6 +17,8 @@ public class Token {
     private UUID id;
     @Column(name = "expired", nullable = false)
     private boolean expired;
+    @Column(name = "disabled", nullable = false)
+    private boolean disabled;
     @Column(name = "issue_date", nullable = false)
     private long issueDate;
     @Column(name = "expired_date", nullable = true)
@@ -47,6 +49,14 @@ public class Token {
 
     public void setExpired(boolean expired) {
         this.expired = expired;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 
     public long getIssueDate() {
