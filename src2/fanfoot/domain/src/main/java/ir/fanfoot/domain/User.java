@@ -1,4 +1,4 @@
-package ir.telefa.domain;
+package ir.fanfoot.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -17,7 +17,6 @@ public class User {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @org.hibernate.annotations.Type(type = "pg-uuid")
     private UUID id;
-
     @Column(name = "is_enabled", nullable = false)
     private boolean enabled;
     @Column(name = "is_expired", nullable = false)
@@ -26,7 +25,6 @@ public class User {
     private long createDate;
     @Column(name = "last_login_date", nullable = true)
     private Long lastLoginDate;
-
     @Column(name = "username", length = 20, nullable = false, unique = true)
     private String username;
     @Column(name = "email", length = 512, nullable = false, unique = true)
@@ -46,6 +44,8 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id", nullable = true)
     private Team team;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    private Profile profile;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "site_user__role",
             schema = "public",
@@ -59,14 +59,6 @@ public class User {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public boolean isMale() {
-        return male;
-    }
-
-    public void setMale(boolean male) {
-        this.male = male;
     }
 
     public boolean isEnabled() {
@@ -85,94 +77,6 @@ public class User {
         this.expired = expired;
     }
 
-    public boolean isShowGender() {
-        return showGender;
-    }
-
-    public void setShowGender(boolean showGender) {
-        this.showGender = showGender;
-    }
-
-    public boolean isShowFirstName() {
-        return showFirstName;
-    }
-
-    public void setShowFirstName(boolean showFirstName) {
-        this.showFirstName = showFirstName;
-    }
-
-    public boolean isShowMiddleName() {
-        return showMiddleName;
-    }
-
-    public void setShowMiddleName(boolean showMiddleName) {
-        this.showMiddleName = showMiddleName;
-    }
-
-    public boolean isShowLastName() {
-        return showLastName;
-    }
-
-    public void setShowLastName(boolean showLastName) {
-        this.showLastName = showLastName;
-    }
-
-    public boolean isShowEmail() {
-        return showEmail;
-    }
-
-    public void setShowEmail(boolean showEmail) {
-        this.showEmail = showEmail;
-    }
-
-    public boolean isShowPhone() {
-        return showPhone;
-    }
-
-    public void setShowPhone(boolean showPhone) {
-        this.showPhone = showPhone;
-    }
-
-    public boolean isShowCellphone() {
-        return showCellphone;
-    }
-
-    public void setShowCellphone(boolean showCellphone) {
-        this.showCellphone = showCellphone;
-    }
-
-    public boolean isShowAddress() {
-        return showAddress;
-    }
-
-    public void setShowAddress(boolean showAddress) {
-        this.showAddress = showAddress;
-    }
-
-    public boolean isShowSecondEmail() {
-        return showSecondEmail;
-    }
-
-    public void setShowSecondEmail(boolean showSecondEmail) {
-        this.showSecondEmail = showSecondEmail;
-    }
-
-    public boolean isShowAboutMe() {
-        return showAboutMe;
-    }
-
-    public void setShowAboutMe(boolean showAboutMe) {
-        this.showAboutMe = showAboutMe;
-    }
-
-    public boolean isShowStatus() {
-        return showStatus;
-    }
-
-    public void setShowStatus(boolean showStatus) {
-        this.showStatus = showStatus;
-    }
-
     public long getCreateDate() {
         return createDate;
     }
@@ -187,38 +91,6 @@ public class User {
 
     public void setLastLoginDate(Long lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getUsername() {
@@ -291,6 +163,14 @@ public class User {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public Set<Role> getRoles() {

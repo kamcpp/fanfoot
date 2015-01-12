@@ -23,11 +23,12 @@ public class MembershipEJB implements Membership {
     private MembershipPolicy membershipPolicy;
 
     @Override
-    public Token authenticate(Credential credential) throws InvalidCredentialException, BadCredentialException, ServerException, MembershipPolicyException {
+    public Token authenticate(Credential credential)
+            throws InvalidCredentialException, BadCredentialException, ServerException, MembershipPolicyException, InvalidTokenException {
         if (!membershipPolicy.allowsAuthentication(credential)) {
             throw new MembershipPolicyException();
         }
-        if (credential instanceof UsernamePasswordCredential) {
+        if (!(credential instanceof UsernamePasswordCredential)) {
             throw new InvalidCredentialException("Credential not supported.");
         }
         membershipPolicy.submitAuthenticateRequest(credential);
@@ -64,22 +65,24 @@ public class MembershipEJB implements Membership {
                 principalRepository.registerToken(principal, token);
             }
             if (token == null) {
-                throw new ServerException("Something went wrong!");
+                throw new ServerException("Something went wrong! Token is null.");
             }
             return token;
-        } catch (PrincipleNotFoundException e) {
+        } catch (PrincipleNotFoundException | InvalidPrincipleException e) {
             membershipPolicy.submitAuthenticationFailure(credential);
             throw new BadCredentialException(e);
         }
     }
 
     @Override
-    public void validateToken(Token token) throws InvalidTokenException, ExpiredTokenException, ServerException {
+    public void validateToken(Token token)
+            throws InvalidTokenException, ExpiredTokenException, ServerException {
         internalValidateToken(token);
     }
 
     @Override
-    public void disableToken(Token token) throws InvalidTokenException, ExpiredTokenException, ServerException {
+    public void disableToken(Token token)
+            throws InvalidTokenException, ExpiredTokenException, ServerException {
         internalValidateToken(token);
         try {
             tokenRepository.disableToken(token);
@@ -89,14 +92,11 @@ public class MembershipEJB implements Membership {
     }
 
     @Override
-    public List<Role> getRoles(Token token) throws InvalidTokenException, ExpiredTokenException, ServerException {
-        try {
-            internalValidateToken(token);
-            Principal principal = principalRepository.findByToken(token);
-            return principal.roles();
-        } catch (PrincipleNotFoundException e) {
-            throw new InvalidTokenException(e);
-        }
+    public List<Role> getRoles(Token token)
+            throws InvalidTokenException, ExpiredTokenException, ServerException, TokenNotFoundException {
+        internalValidateToken(token);
+        Principal principal = principalRepository.findByToken(token);
+        return principal.getRoles();
     }
 
     private void internalValidateToken(Token token) throws InvalidTokenException, ExpiredTokenException, ServerException {

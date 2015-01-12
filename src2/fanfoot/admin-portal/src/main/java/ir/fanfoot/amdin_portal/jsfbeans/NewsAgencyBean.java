@@ -1,7 +1,7 @@
 package ir.fanfoot.amdin_portal.jsfbeans;
 
 import ir.fanfoot.biz.dao.NewsAgencyDAO;
-import ir.telefa.domain.NewsAgency;
+import ir.fanfoot.domain.NewsAgency;
 import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;

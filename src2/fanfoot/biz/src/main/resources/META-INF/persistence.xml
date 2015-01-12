@@ -4,20 +4,22 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/fanfoot</jta-data-source>
         <non-jta-data-source>java:jboss/datasources/fanfoot</non-jta-data-source>
-        <class>ir.telefa.domain.NewsAgency</class>
-        <class>ir.telefa.domain.News</class>
-        <class>ir.telefa.domain.Question</class>
-        <class>ir.telefa.domain.Option</class>
-        <class>ir.telefa.domain.Role</class>
-        <class>ir.telefa.domain.User</class>
-        <class>ir.telefa.domain.Team</class>
-        <class>ir.telefa.domain.Tag</class>
+        <class>ir.fanfoot.domain.NewsAgency</class>
+        <class>ir.fanfoot.domain.News</class>
+        <class>ir.fanfoot.domain.Question</class>
+        <class>ir.fanfoot.domain.Option</class>
+        <class>ir.fanfoot.domain.Role</class>
+        <class>ir.fanfoot.domain.User</class>
+        <class>ir.fanfoot.domain.Profile</class>
+        <class>ir.fanfoot.domain.Team</class>
+        <class>ir.fanfoot.domain.Tag</class>
+        <class>ir.fanfoot.domain.Token</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.use_sql_comments" value="false"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>

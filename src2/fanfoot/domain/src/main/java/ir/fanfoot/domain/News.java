@@ -1,5 +1,6 @@
-package ir.telefa.domain;
+package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.Sorted;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -34,6 +35,7 @@ public class News {
     private String author;
     @Column(name = "source_publish_date", nullable = true)
     private long sourcePublishDate;
+    @Sorted(order = 1, sort = Sorted.Sort.DESCENDING)
     @Column(name = "publish_date", nullable = false)
     private long publishDate;
     @Column(name = "number_of_visitors", nullable = false)

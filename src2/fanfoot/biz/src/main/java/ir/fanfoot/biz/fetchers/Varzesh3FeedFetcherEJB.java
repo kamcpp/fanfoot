@@ -6,8 +6,8 @@ import ir.fanfoot.biz.dao.NewsAgencyDAO;
 import ir.fanfoot.biz.dao.NewsDAO;
 import ir.fanfoot.util.FeedFetcher;
 import ir.fanfoot.util.FeedItem;
-import ir.telefa.domain.News;
-import ir.telefa.domain.NewsAgency;
+import ir.fanfoot.domain.News;
+import ir.fanfoot.domain.NewsAgency;
 
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
@@ -30,6 +30,9 @@ public class Varzesh3FeedFetcherEJB {
 
     @EJB
     private NewsAgencyDAO newsAgencyDAO;
+
+    @EJB
+    private TagAssignerEJB tagAssignerEJB;
 
     @Inject
     private FeedFetcher feedFetcher;
@@ -66,6 +69,7 @@ public class Varzesh3FeedFetcherEJB {
                         news.setSourceURL(feedItem.getUri().trim());
                         news.setTitle(feedItem.getTitle().trim());
                         newsDAO.saveOrUpdate(news);
+                        tagAssignerEJB.assignTags(news);
                     }
                 }
             }

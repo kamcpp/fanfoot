@@ -12,4 +12,8 @@ public interface GenericDAO <T> {
     T getById(UUID id);
 
     List<T> getAll();
+
+    List<T> getAllPaged(int first, int pageSize);
+
+    long count();
 }

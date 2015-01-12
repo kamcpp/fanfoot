@@ -1,5 +1,6 @@
-package ir.telefa.domain;
+package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.Sorted;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Tag {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @org.hibernate.annotations.Type(type = "pg-uuid")
     private UUID id;
+    @Sorted(order = 1, sort = Sorted.Sort.ASCENDING)
     @Column(name = "name", length = 1024, nullable = false)
     private String name;
 

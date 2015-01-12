@@ -2,7 +2,7 @@ package ir.fanfoot.amdin_portal.jsfbeans;
 
 import ir.fanfoot.biz.dao.NewsDAO;
 import ir.fanfoot.util.JalaliCalendar;
-import ir.telefa.domain.News;
+import ir.fanfoot.domain.News;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;

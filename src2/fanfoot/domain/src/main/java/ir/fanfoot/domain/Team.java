@@ -1,4 +1,4 @@
-package ir.telefa.domain;
+package ir.fanfoot.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 

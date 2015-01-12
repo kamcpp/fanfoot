@@ -7,7 +7,7 @@ public class DefaultMembershipPolicy implements MembershipPolicy {
 
     @Override
     public boolean allowsAuthentication(Credential credential) {
-        return false;
+        return true;
     }
 
     @Override

@@ -1,10 +1,10 @@
 package ir.fanfoot.biz.dao;
 
-import ir.telefa.domain.Role;
+import ir.fanfoot.domain.Role;
 
 import java.util.List;
 
 public interface RoleDAO extends GenericDAO<Role> {
 
-    List<Role> getByUsername(String username);
+    Role getByName(String name);
 }

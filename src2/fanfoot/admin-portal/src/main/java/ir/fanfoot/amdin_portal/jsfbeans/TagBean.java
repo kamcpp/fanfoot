@@ -1,7 +1,7 @@
 package ir.fanfoot.amdin_portal.jsfbeans;
 
 import ir.fanfoot.biz.dao.TagDAO;
-import ir.telefa.domain.Tag;
+import ir.fanfoot.domain.Tag;
 import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;

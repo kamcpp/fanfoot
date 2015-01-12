@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface Principal {
 
-    List<Role> roles();
+    List<Role> getRoles();
 }

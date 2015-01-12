@@ -1,6 +1,6 @@
 package ir.fanfoot.biz.dao;
 
-import ir.telefa.domain.Tag;
+import ir.fanfoot.domain.Tag;
 
 public interface TagDAO extends GenericDAO<Tag> {
 
