@@ -5,7 +5,10 @@ import ir.fanfoot.util.HashProvider;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @ManagedBean
 public class LoginBean {
@@ -48,17 +51,16 @@ public class LoginBean {
         try {
             Token token = membership.authenticate(
                     new UsernamePasswordCredential(username, hashProvider.hashAsString(password)));
-            System.out.println("SUCCESSSSSS: " + token.value());
-        } catch (InvalidCredentialException e) {
+            HttpSession session = (HttpSession) FacesContext.
+                    getCurrentInstance().getExternalContext().getSession(true);
+            session.setAttribute("authenticationToken", token);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("u/news");
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (BadCredentialException e) {
-            e.printStackTrace();
-        } catch (ServerException e) {
-            e.printStackTrace();
-        } catch (MembershipPolicyException e) {
-            e.printStackTrace();
-        } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("login");
+            } catch (IOException e1) {
+            }
         }
     }
 }
