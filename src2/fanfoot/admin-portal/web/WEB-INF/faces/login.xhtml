@@ -11,26 +11,26 @@
 <h:body>
     <ui:composition template="templates/layout.xhtml">
         <ui:define name="head">
-            <title>Login - FanFoot Admin Portal</title>
+            <title>پنل مدیریت فنفوت - ورود به سیستم</title>
         </ui:define>
         <ui:define name="content">
             <h:form id="login-form">
                 <p:panel footer="Login">
                     <f:facet name="header" style="display: inline;">
-                        <h:outputLabel value="Login please!" />
+                        <h:outputLabel value="لطفا وارد شوید" />
                     </f:facet>
                     <p:panelGrid columns="2">
-                        Username <p:inputText value="#{loginBean.username}"/><br/>
-                        Password <p:password value="#{loginBean.password}"/><br/>
+                        نام کاربری <p:inputText value="#{loginBean.username}"/><br/>
+                        کلمه عبور <p:password value="#{loginBean.password}"/><br/>
                         <p:row>
-                            <p:selectBooleanCheckbox value="#{loginBean.rememberMe}"/> Remeber Me
+                            <p:selectBooleanCheckbox value="#{loginBean.rememberMe}"/> مرا به خاطر بسپار
                         </p:row>
                         <p:row>
-                            <p:commandButton value="LOGIN" actionListener="#{loginBean.processLogin()}"/>
+                            <p:commandButton value="ورود" actionListener="#{loginBean.processLogin()}"/>
                         </p:row>
                     </p:panelGrid>
                     <f:facet name="footer">
-                        <a href="#">Forgot your password?</a>
+                        <a href="#">کلمه عبور را فراموش کرده ام</a>
                     </f:facet>
                 </p:panel>
             </h:form>

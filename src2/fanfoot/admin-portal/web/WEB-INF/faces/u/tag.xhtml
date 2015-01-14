@@ -27,6 +27,9 @@
                     <p:column headerText="Name">
                         <h:outputText value="#{tag.name}"/>
                     </p:column>
+                    <p:column headerText="Keywords">
+                        <h:outputText value="#{tag.keywords}"/>
+                    </p:column>
                     <p:column headerText="EDIT" style="text-align: center">
                         <p:commandButton value="EDIT" update=":edit-dialog"
                                          actionListener="#{tagBean.select(tag.id)}"
@@ -40,7 +43,7 @@
                 </p:dataTable>
             </h:form>
             <p:dialog id="edit-dialog" header="Add/Edit Tag" widgetVar="editDialog"
-                      modal="true" appendToBody="true" width="450px" height="200px"
+                      modal="true" appendToBody="true" width="450px" height="250px"
                       closable="false" resizable="false">
                 <h:form>
                     <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
@@ -48,6 +51,7 @@
                         ID <p:inputText value="#{tagBean.tag.id}" disabled="true"/><br/>
                         Name <p:inputText value="#{tagBean.tag.name}" required="true"
                                                 requiredMessage="Name is required."/><br/>
+                        Keywords <p:inputTextarea value="#{tagBean.tag.keywords}" required="false" /><br/>
                         <p:row>
                             <p:commandButton value="CANCEL" style="color: red;"
                                              onclick="PF('editDialog').hide();"/>

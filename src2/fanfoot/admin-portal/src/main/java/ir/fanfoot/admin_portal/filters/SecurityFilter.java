@@ -13,7 +13,7 @@ public class SecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
-        Object user = req.getSession().getAttribute("authenticationToken");
+        Object user = req.getSession().getAttribute("authToken");
         if (user != null) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {

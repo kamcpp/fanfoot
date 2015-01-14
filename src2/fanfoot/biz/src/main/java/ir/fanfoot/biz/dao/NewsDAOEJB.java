@@ -24,7 +24,7 @@ public class NewsDAOEJB extends AbstractDAO<News> implements NewsDAO {
 
     @Override
     public List<News> getAllShownPaged(int first, int pageSize) {
-        return (List<News>) entityManager.createQuery("SELECT news FROM News news WHERE news.shown = true ORDER BY news.publishDate DESC")
+        return (List<News>) entityManager.createQuery("SELECT news FROM News news WHERE news.shown = true " + getDefaultOrderByClause())
                 .setFirstResult(first)
                 .setMaxResults(pageSize)
                 .getResultList();

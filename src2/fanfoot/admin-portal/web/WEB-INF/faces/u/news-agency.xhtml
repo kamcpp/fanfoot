@@ -11,62 +11,62 @@
 <h:body>
     <ui:composition template="../templates/layout.xhtml">
         <ui:define name="head">
-            <title>News Agency - FanFoot Admin Portal</title>
+            <title>پنل مدیریت فنفوت - آژانس خبری</title>
         </ui:define>
         <ui:define name="content">
-            <h1 class="heading">News Agencies</h1>
+            <h1 class="heading">آژانس های خبری</h1>
             <h:form id="form-list">
-                <p:commandButton update=":edit-dialog" value="ADD NEWS AGENCY"
+                <p:commandButton update=":edit-dialog" value="آژانس خبری جدید"
                                  actionListener="#{newsAgencyBean.prepareForAdd()}"
                                  oncomplete="PF('editDialog').show();"/>
                 <br/>
                 <p:dataTable id="list-dt" var="newsAgency" value="#{newsAgencyBean.all}">
-                    <p:column headerText="Local Name">
+                    <p:column headerText="نام داخلی">
                         <h:outputText value="#{newsAgency.localName}"/>
                     </p:column>
-                    <p:column headerText="English Name">
+                    <p:column headerText="نام انگلیسی">
                         <h:outputText value="#{newsAgency.englishName}"/>
                     </p:column>
-                    <p:column headerText="Qulified Name">
+                    <p:column headerText="نام تایید شده">
                         <h:outputText value="#{newsAgency.englishQualifiedName}"/>
                     </p:column>
-                    <p:column headerText="Website">
+                    <p:column headerText="وب سایت">
                         <h:outputText value="#{newsAgency.website}"/>
                     </p:column>
-                    <p:column headerText="EDIT" style="text-align: center">
-                        <p:commandButton value="EDIT" update=":edit-dialog"
+                    <p:column headerText="ویرایش" style="text-align: center">
+                        <p:commandButton value="ویرایش" update=":edit-dialog"
                                          actionListener="#{newsAgencyBean.select(newsAgency.id)}"
                                          oncomplete="PF('editDialog').show();"/>
                     </p:column>
-                    <p:column headerText="DELETE" style="text-align: center">
-                        <p:commandButton value="DELETE" onclick="return confirm('Are you sure?');"
+                    <p:column headerText="ویرایش" style="text-align: center">
+                        <p:commandButton value="ویرایش" onclick="return confirm('آیا مطمین هستید?');"
                                          update=":form-list:list-dt"
                                          actionListener="#{newsAgencyBean.delete(newsAgency.id)}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>
-            <p:dialog id="edit-dialog" header="Add/Edit News Agency" widgetVar="editDialog"
+            <p:dialog id="edit-dialog" header="فرم ویرایش آژانس خبری" widgetVar="editDialog"
                       modal="true" appendToBody="true" width="450px" height="380px"
                       closable="false" resizable="false">
                 <h:form>
                     <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
                     <p:panelGrid columns="2">
-                        ID <p:inputText value="#{newsAgencyBean.newsAgency.id}" disabled="true"/><br/>
-                        Local Name <p:inputText value="#{newsAgencyBean.newsAgency.localName}" required="true"
-                                                requiredMessage="Local name is required."/><br/>
-                        English Name <p:inputText value="#{newsAgencyBean.newsAgency.englishName}" required="true"
-                                                  requiredMessage="English name is required."/><br/>
-                        Qulified Name <p:inputText value="#{newsAgencyBean.newsAgency.englishQualifiedName}"
+                        شناسه <p:inputText value="#{newsAgencyBean.newsAgency.id}" disabled="true"/><br/>
+                        نام داخلی <p:inputText value="#{newsAgencyBean.newsAgency.localName}" required="true"
+                                                requiredMessage="نام داخلی اجباری است."/><br/>
+                        نام انگلیسی <p:inputText value="#{newsAgencyBean.newsAgency.englishName}" required="true"
+                                                  requiredMessage="نام انگلیسی اجباری است."/><br/>
+                        نام تایید شده <p:inputText value="#{newsAgencyBean.newsAgency.englishQualifiedName}"
                                                    required="true"
-                                                   requiredMessage="English qualified name is required."/><br/>
-                        Website <p:inputText value="#{newsAgencyBean.newsAgency.website}" required="true"
-                                             requiredMessage="Website is required."/><br/>
-                        Description <p:inputTextarea value="#{newsAgencyBean.newsAgency.description}"
+                                                   requiredMessage="نام تایید شده اجباری است."/><br/>
+                        وب سایت <p:inputText value="#{newsAgencyBean.newsAgency.website}" required="true"
+                                             requiredMessage="وب سایت اجباری است."/><br/>
+                        توضیحات <p:inputTextarea value="#{newsAgencyBean.newsAgency.description}"
                                                      required="false"/><br/>
                         <p:row>
-                            <p:commandButton value="CANCEL" style="color: red;"
+                            <p:commandButton value="لغو" style="color: red;"
                                              onclick="PF('editDialog').hide();"/>
-                            <p:commandButton value="SAVE" style="color: green;" update="growl,:form-list:list-dt"
+                            <p:commandButton value="ذخیره" style="color: green;" update="growl,:form-list:list-dt"
                                              actionListener="#{newsAgencyBean.saveOrUpdate()}"
                                              oncomplete="handleResponse(xhr, status, args);"/>
                         </p:row>

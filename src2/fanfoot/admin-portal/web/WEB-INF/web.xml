@@ -4,13 +4,31 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
+
     <servlet>
         <servlet-name>faces</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>fileServlet</servlet-name>
+        <servlet-class>ir.fanfoot.admin_portal.servlets.FileServlet</servlet-class>
+        <init-param>
+            <param-name>basePath</param-name>
+            <param-value>/home/kamran/.fanfoot</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>fileServlet</servlet-name>
+        <url-pattern>/files/*</url-pattern>
+    </servlet-mapping>
     <context-param>
         <param-name>org.omnifaces.FACES_VIEWS_SCAN_PATHS</param-name>
         <param-value>/WEB-INF/faces</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.UPLOADER</param-name>
+        <param-value>commons</param-value>
     </context-param>
     <servlet-mapping>
         <servlet-name>faces</servlet-name>
@@ -26,5 +44,13 @@
     <filter-mapping>
         <filter-name>securityFilter</filter-name>
         <url-pattern>/u/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>primefaces-fileupload-filter</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>primefaces-fileupload-filter</filter-name>
+        <servlet-name>faces</servlet-name>
     </filter-mapping>
 </web-app>

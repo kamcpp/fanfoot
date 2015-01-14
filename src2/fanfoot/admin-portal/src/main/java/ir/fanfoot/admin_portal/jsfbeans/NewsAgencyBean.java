@@ -1,4 +1,4 @@
-package ir.fanfoot.amdin_portal.jsfbeans;
+package ir.fanfoot.admin_portal.jsfbeans;
 
 import ir.fanfoot.biz.dao.NewsAgencyDAO;
 import ir.fanfoot.domain.NewsAgency;
@@ -33,7 +33,7 @@ public class NewsAgencyBean {
     }
 
     public void prepareForAdd() {
-        if (newsAgency == null || (newsAgency != null && newsAgency.getId() != null)) {
+        if (newsAgency == null || newsAgency.getId() != null) {
             newsAgency = new NewsAgency();
         }
     }

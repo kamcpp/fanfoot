@@ -15,14 +15,16 @@ public class Team {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @org.hibernate.annotations.Type(type = "pg-uuid")
     private UUID id;
-    @Column(name="local_name", length = 512, nullable = false)
+    @Column(name = "local_name", length = 512, nullable = false)
     private String localName;
-    @Column(name="english_name", length = 512, nullable = false)
+    @Column(name = "english_name", length = 512, nullable = false)
     private String englishName;
-    @Column(name="establishment_year", length = 512, nullable = false)
+    @Column(name = "establishment_year", length = 512, nullable = false)
     private String establishmentYear;
-    @Column(name="description", length = 4096, nullable = false)
+    @Column(name = "description", length = 4096, nullable = false)
     private String description;
+    @Column(name = "logo", length = 2048, nullable = true)
+    private String logo;
 
     public UUID getId() {
         return id;
@@ -62,5 +64,13 @@ public class Team {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }

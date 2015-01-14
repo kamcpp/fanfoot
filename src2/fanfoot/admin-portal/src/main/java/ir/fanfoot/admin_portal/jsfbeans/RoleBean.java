@@ -1,7 +1,7 @@
-package ir.fanfoot.amdin_portal.jsfbeans;
+package ir.fanfoot.admin_portal.jsfbeans;
 
-import ir.fanfoot.biz.dao.TagDAO;
-import ir.fanfoot.domain.Tag;
+import ir.fanfoot.biz.dao.RoleDAO;
+import ir.fanfoot.domain.Role;
 import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;
@@ -13,37 +13,37 @@ import java.util.UUID;
 
 @ManagedBean
 @SessionScoped
-public class TagBean {
+public class RoleBean {
 
     @EJB
-    private TagDAO tagDAO;
+    private RoleDAO roleDAO;
 
-    private Tag tag;
+    private Role role;
 
-    public Tag getTag() {
-        return tag;
+    public Role getRole() {
+        return role;
     }
 
     public void saveOrUpdate() throws SystemException {
-        tagDAO.saveOrUpdate(tag);
+        roleDAO.saveOrUpdate(role);
         RequestContext.getCurrentInstance().addCallbackParam("processed", true);
     }
 
     public void prepareForAdd() {
-        if (tag == null || (tag != null && tag.getId() != null)) {
-            tag = new Tag();
+        if (role == null || role.getId() != null) {
+            role = new Role();
         }
     }
 
     public void select(UUID id) {
-        tag = tagDAO.getById(id);
+        role = roleDAO.getById(id);
     }
 
     public void delete(UUID id) throws SystemException {
-        tagDAO.delete(id);
+        roleDAO.delete(id);
     }
 
-    public List<Tag> getAll() {
-        return tagDAO.getAll();
+    public List<Role> getAll() {
+        return roleDAO.getAll();
     }
 }

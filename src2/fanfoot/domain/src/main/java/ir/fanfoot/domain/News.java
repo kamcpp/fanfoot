@@ -33,9 +33,9 @@ public class News {
     private String sourceURL;
     @Column(name = "author", length = 1024, nullable = true)
     private String author;
+    @Sorted(order = 1, sort = Sorted.Sort.DESCENDING)
     @Column(name = "source_publish_date", nullable = true)
     private long sourcePublishDate;
-    @Sorted(order = 1, sort = Sorted.Sort.DESCENDING)
     @Column(name = "publish_date", nullable = false)
     private long publishDate;
     @Column(name = "number_of_visitors", nullable = false)

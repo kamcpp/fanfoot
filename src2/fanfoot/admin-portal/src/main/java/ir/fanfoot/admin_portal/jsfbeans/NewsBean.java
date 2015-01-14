@@ -1,4 +1,4 @@
-package ir.fanfoot.amdin_portal.jsfbeans;
+package ir.fanfoot.admin_portal.jsfbeans;
 
 import ir.fanfoot.biz.dao.NewsDAO;
 import ir.fanfoot.util.JalaliCalendar;
@@ -51,7 +51,7 @@ public class NewsBean {
     }
 
     public void prepareForAdd() {
-        if (news == null || (news != null && news.getId() != null)) {
+        if (news == null || news.getId() != null) {
             news = new News();
         }
     }

@@ -19,6 +19,8 @@ public class Tag {
     @Sorted(order = 1, sort = Sorted.Sort.ASCENDING)
     @Column(name = "name", length = 1024, nullable = false)
     private String name;
+    @Column(name = "keywords", length = 5120, nullable = true)
+    private String keywords;
 
     public UUID getId() {
         return id;
@@ -34,6 +36,14 @@ public class Tag {
 
     public void setName(String name) {
         this.name = name.trim().toLowerCase();
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     @Override

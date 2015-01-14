@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+    <ui:composition template="../templates/layout.xhtml">
+        <ui:define name="head">
+            <title>Teams - FanFoot Admin Portal</title>
+        </ui:define>
+        <ui:define name="content">
+            <h1 class="heading">Teams</h1>
+            <h:form id="form-list">
+                <p:commandButton update=":edit-dialog" value="ADD TEAM"
+                                 actionListener="#{teamBean.prepareForAdd()}"
+                                 oncomplete="PF('editDialog').show();"/>
+                <br/>
+                <p:dataTable id="list-dt" var="team" value="#{teamBean.all}">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{team.id}"/>
+                    </p:column>
+                    <p:column headerText="Local Name">
+                        <h:outputText value="#{team.localName}"/>
+                    </p:column>
+                    <p:column headerText="English Name">
+                        <h:outputText value="#{team.englishName}"/>
+                    </p:column>
+                    <p:column headerText="Estab. Year">
+                        <h:outputText value="#{team.establishmentYear}"/>
+                    </p:column>
+                    <p:column headerText="Description">
+                        <h:outputText value="#{team.description}"/>
+                    </p:column>
+                    <p:column headerText="EDIT" style="text-align: center">
+                        <p:commandButton value="EDIT" update=":edit-dialog"
+                                         actionListener="#{teamBean.select(team.id)}"
+                                         oncomplete="PF('editDialog').show();"/>
+                    </p:column>
+                    <p:column headerText="DELETE" style="text-align: center">
+                        <p:commandButton value="DELETE" onclick="return confirm('Are you sure?');"
+                                         update=":form-list:list-dt"
+                                         actionListener="#{tagBean.delete(team.id)}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:dialog id="edit-dialog" header="Add/Edit Team" widgetVar="editDialog"
+                      modal="true" appendToBody="true" width="450px" height="450px"
+                      closable="false" resizable="false">
+                <h:form enctype="multipart/form-data">
+                    <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
+                    <p:panelGrid columns="2">
+                        ID <p:inputText value="#{teamBean.team.id}" disabled="true"/><br/>
+                        Local Name <p:inputText value="#{teamBean.team.localName}" required="true"
+                                                requiredMessage="Local name is required."/><br/>
+                        English Name <p:inputText value="#{teamBean.team.englishName}" required="false" /><br/>
+                        Estab. Year <p:inputText value="#{teamBean.team.establishmentYear}" required="false" /><br/>
+                        Logo <p:fileUpload fileUploadListener="#{teamBean.upload}" allowTypes="/(\.|\/)(jpe?g|png)$/"
+                                           sizeLimit="204800" description="Select Logo" mode="advanced" /><br />
+                        Description <p:inputTextarea value="#{teamBean.team.description}" required="false" /><br/>
+                        <p:row>
+                            <p:commandButton value="CANCEL" style="color: red;"
+                                             onclick="PF('editDialog').hide();"/>
+                            <p:commandButton  value="SAVE" style="color: green;" update="growl,:form-list:list-dt"
+                                             actionListener="#{teamBean.saveOrUpdate()}"
+                                             oncomplete="handleResponse(xhr, status, args);"/>
+                        </p:row>
+
+                    </p:panelGrid>
+                </h:form>
+                <script type="text/javascript">
+                    function handleResponse(xhr, status, args) {
+                        if (args.validationFailed || !args.processed) {
+                            PF('editDialog').jq.effect("shake", {times: 5}, 100);
+                        }
+                        else {
+                            PF('editDialog').hide();
+                        }
+                    }
+                </script>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

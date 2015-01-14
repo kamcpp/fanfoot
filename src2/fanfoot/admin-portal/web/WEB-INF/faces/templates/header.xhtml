@@ -10,7 +10,7 @@
 <h:body>
     <ui:composition>
         <div id="header">
-            FanFoot Admin Panel
+            پنل مدیریتی فن فوت
         </div>
         <div id="right-panel">
             <script type="text/javascript">
@@ -25,14 +25,24 @@
                     });
                 });
             </script>
-            <ul>
-                <li class="right-panel-item"><a href="#{request.contextPath}/u">Home</a></li>
-                <li class="right-panel-item"><a href="#{request.contextPath}/u/news-agency">News Agencies</a></li>
-                <li class="right-panel-item"><a href="#{request.contextPath}/u/news">News</a></li>
-                <li class="right-panel-item"><a href="#{request.contextPath}/u/tags">Tags</a></li>
-                <li class="right-panel-item"><a href="#{request.contextPath}/u/user">Users</a></li>
-                <li class="right-panel-item"><a href="#{request.contextPath}/u/logout">Logout</a></li>
-            </ul>
+            <h:panelGroup rendered="#{not empty authToken}">
+                <ul>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/u">صفحه اصلی</a></li>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/u/news">اخبار</a></li>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/u/tag">برچسب ها</a></li>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/u/team">تیم های فوتبال</a></li>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/u/question">سوالات</a></li>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/u/news-agency">آژانس های خبری</a></li>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/u/user">کاربران</a></li>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/u/role">نقش های کاربری</a></li>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/u/logout">خروج</a></li>
+                </ul>
+            </h:panelGroup>
+            <h:panelGroup rendered="${empty authToken}">
+                <ul>
+                    <li class="right-panel-item"><a href="#{request.contextPath}/login">ورود</a></li>
+                </ul>
+            </h:panelGroup>
         </div>
     </ui:composition>
 </h:body>

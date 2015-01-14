@@ -1,4 +1,4 @@
-package ir.fanfoot.amdin_portal.jsfbeans;
+package ir.fanfoot.admin_portal.jsfbeans;
 
 import ir.fanfoot.biz.membership.*;
 import ir.fanfoot.util.HashProvider;
@@ -53,7 +53,7 @@ public class LoginBean {
                     new UsernamePasswordCredential(username, hashProvider.hashAsString(password)));
             HttpSession session = (HttpSession) FacesContext.
                     getCurrentInstance().getExternalContext().getSession(true);
-            session.setAttribute("authenticationToken", token);
+            session.setAttribute("authToken", token);
             FacesContext.getCurrentInstance().getExternalContext().redirect("u/news");
         } catch (Exception e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package ir.fanfoot.biz.dao;
 import ir.fanfoot.annotations.Sorted;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import java.lang.reflect.Field;
@@ -55,6 +56,9 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {
+            if (!(e instanceof NoResultException)) {
+                e.printStackTrace();
+            }
             return null;
         }
     }
