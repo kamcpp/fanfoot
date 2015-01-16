@@ -9,8 +9,9 @@
     <ui:insert name="head">
         <ui:include src="head.xhtml"/>
     </ui:insert>
-    <h:outputStylesheet name="main.css" library="css"/>
-    <h:outputStylesheet name="fixes.css" library="css"/>
+    <link rel="stylesheet" href="#{request.contextPath}/res/css/fonts.css" type="text/css"/>
+    <link rel="stylesheet" href="#{request.contextPath}/res/css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="#{request.contextPath}/res/css/fixes.css" type="text/css"/>
 </h:head>
 <h:body>
     <ui:insert name="header">

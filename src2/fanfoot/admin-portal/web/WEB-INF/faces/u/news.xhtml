@@ -14,32 +14,49 @@
             <title>پنل مدیریت فنفوت - اخبار</title>
         </ui:define>
         <ui:define name="content">
-            <h1 class="heading">اخبار</h1>
-            <h:form id="form-list">
-                <p:commandButton style="margin-right: 20px;" value="REFRESH" update="list-dt,number-of-messages" /> <h:outputLabel id="number-of-messages" value="#{newsBean.numberOfShownNews} Shown News" />
+            <h1 style="float: right;" class="heading">اخبار</h1>
+            <br />
+            <br />
+            <h:form styleClass="ltr" id="form-list">
+                <div style="direction: rtl; float: right;">
+                    برای جست و جوی خبر بخشی از عنوان آن را در زیر وارد کنید
+                    <br/>
+                    <br />
+                    <p:inputText value="#{newsBean.searchText}"/>
+                    <p:commandButton value="جست و جو" actionListener="#{newsBean.search()}" update="list-dt"/>
+                </div>
+                <br />
+                <br />
+                <p:commandButton value="بروزرسانی" update="list-dt"/> <br/>
                 <p:dataTable id="list-dt" var="news" value="#{newsBean.dataModel}"
-                        lazy="true" paginator="true" rows="5"
-                        paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                	    rowsPerPageTemplate="5,10,20,50,100">
-                    <p:column headerText="تاریخ بازنشر" style="text-align: center;">
-                        <h:outputText value="#{newsBean.convertTimeWithTimeZome(news.publishDate)}"/>
-                    </p:column>
-                    <p:column headerText="تاریخ انتشار" style="text-align: center;">
-                        <h:outputText value="#{newsBean.convertTimeWithTimeZome(news.sourcePublishDate)}"/>
-                    </p:column>
-                    <p:column headerText="آژانس خبری" style="text-align: center;">
-                        <h:outputText value="#{news.newsAgency.localName}"/>
-                    </p:column>
-                    <p:column headerText="عنوان خبر">
-                        <h:outputText value="#{news.title}"/>
-                    </p:column>
-                    <p:column headerText="لینک به خبر" style="text-align: center;">
-                        <h:outputLink style="text-decoration: none" value="#{news.link}" target="_blank">Link</h:outputLink>
-                    </p:column>
-                    <p:column headerText="حذف" style="text-align: center">
-                        <p:commandButton value="حذف" onclick="return confirm('آیا مطمين هستید?');"
+                             lazy="true" paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,20,50,100">
+                    <p:column headerText="مدیریت" style="text-align: right; width: 300px;">
+                        <p:button styleClass="news-management-button" value="لینک اصلی"
+                                  onclick="window.open('#{news.link}')"/>
+                        <p:commandButton styleClass="news-management-button" value="حذف"
+                                         onclick="return confirm('آیا مطمين هستید?');"
                                          update=":form-list:list-dt"
                                          actionListener="#{newsBean.delete(news.id)}"/>
+                        <p:commandButton styleClass="news-management-button" value="ویرایش" update=":form-list:list-dt"
+                                />
+                        <p:commandButton styleClass="news-management-button" value="عدم انتشار"
+                                         update=":form-list:list-dt"
+                                />
+                    </p:column>
+                    <p:column headerText="تاریخ بازنشر" style="text-align: center; width: 70px; direction: rtl;">
+                        <h:outputText value="#{newsBean.convertTimeWithTimeZome(news.publishDate)}"/>
+                    </p:column>
+                    <p:column width="40px" headerText="تاریخ انتشار"
+                              style="text-align: center; width: 70px; direction: rtl;">
+                        <h:outputText value="#{newsBean.convertTimeWithTimeZome(news.sourcePublishDate)}"/>
+                    </p:column>
+                    <p:column headerText="آژانس خبری" style="text-align: center; width: 70px;">
+                        <h:outputText value="#{news.newsAgency.localName}"/>
+                    </p:column>
+                    <p:column headerText="عنوان خبر" style="text-align: right; direction: rtl;">
+                        <h:outputText value="#{news.title}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>

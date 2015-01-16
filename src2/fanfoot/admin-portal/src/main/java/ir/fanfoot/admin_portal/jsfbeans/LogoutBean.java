@@ -8,6 +8,11 @@ import java.io.IOException;
 @ManagedBean
 public class LogoutBean {
     public void logout() {
+        System.out.println("---------------------------------------------");
+        for( StackTraceElement e :Thread.currentThread().getStackTrace()) {
+            System.out.println(e.getFileName() + " -> " + e.getClassName() + " -> " + e.getMethodName() + " -> " + e.getLineNumber());
+        }
+        System.out.println("---------------------------------------------");
         HttpSession session = (HttpSession) FacesContext.
                 getCurrentInstance().getExternalContext().getSession(true);
         session.removeAttribute("authToken");

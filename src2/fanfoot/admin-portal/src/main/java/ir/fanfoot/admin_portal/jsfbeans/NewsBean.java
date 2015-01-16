@@ -20,13 +20,20 @@ public class NewsBean {
 
     @EJB
     private NewsDAO newsDAO;
-
     private News news;
-
     private LazyDataModel<News> dataModel;
+    private String searchText;
 
     public News getNews() {
         return news;
+    }
+
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
     }
 
     @PostConstruct
@@ -78,5 +85,9 @@ public class NewsBean {
         cal.setTimeInMillis(time);
         return JalaliCalendar.gregorianToJalali(new JalaliCalendar.YearMonthDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH))).toString() + " - " +
                 cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+    }
+
+    public void search() {
+
     }
 }
