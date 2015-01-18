@@ -1,6 +1,7 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.Tag;
+import ir.fanfoot.util.StringHelper;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -18,7 +19,7 @@ public class TagDAOEJB extends AbstractDAO<Tag> implements TagDAO {
         try {
             return (Tag) entityManager
                     .createQuery("SELECT tag FROM Tag tag WHERE tag.name = :name")
-                    .setParameter("name", name.trim().toLowerCase())
+                    .setParameter("name", StringHelper.correctPersianCharacters(name.trim().toLowerCase()))
                     .getSingleResult();
         } catch (Exception e) {
             return null;

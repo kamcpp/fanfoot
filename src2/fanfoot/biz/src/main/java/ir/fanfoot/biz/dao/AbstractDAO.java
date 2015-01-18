@@ -1,6 +1,7 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.annotations.Sorted;
+import ir.fanfoot.util.StringHelper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -31,6 +32,7 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
 
     @Override
     public UUID saveOrUpdate(T entity) {
+        correctEntityStrings(entity);
         UUID id = getId(entity);
         if (id == null) {
             entityManager.persist(entity);
@@ -138,4 +140,21 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
             this.defaultOrderByClause = stringBuilder.toString();
         }
     }
+
+    protected void correctEntityStrings(T entity) {
+        try {
+            for (Field field : clazz.getDeclaredFields()) {
+                field.setAccessible(true);
+                if (field.getType().getName().equals("java.lang.String")) {
+                    String newValue = StringHelper.correctPersianCharacters((String) field.get(entity));
+                    field.set(entity, newValue);
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

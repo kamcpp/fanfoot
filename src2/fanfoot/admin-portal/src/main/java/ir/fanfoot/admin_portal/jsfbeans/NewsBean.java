@@ -1,6 +1,8 @@
 package ir.fanfoot.admin_portal.jsfbeans;
 
 import ir.fanfoot.biz.dao.NewsDAO;
+import ir.fanfoot.biz.dao.TagDAO;
+import ir.fanfoot.domain.Tag;
 import ir.fanfoot.util.JalaliCalendar;
 import ir.fanfoot.domain.News;
 import org.primefaces.context.RequestContext;
@@ -20,6 +22,8 @@ public class NewsBean {
 
     @EJB
     private NewsDAO newsDAO;
+    @EJB
+    private TagDAO tagDAO;
     private News news;
     private LazyDataModel<News> dataModel;
     private String searchText;
@@ -41,8 +45,8 @@ public class NewsBean {
         dataModel = new LazyDataModel<News>() {
             @Override
             public List<News> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-                List<News> allPaged = newsDAO.getAllShownPaged(first, pageSize);
-                setRowCount((int) newsDAO.countShown());
+                List<News> allPaged = newsDAO.getAllPaged(first, pageSize);
+                setRowCount((int) newsDAO.count());
                 return allPaged;
             }
         };
@@ -88,6 +92,52 @@ public class NewsBean {
     }
 
     public void search() {
+        dataModel = new LazyDataModel<News>() {
+            @Override
+            public List<News> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                List<News> allPaged = newsDAO.getAllPagedByTitle(first, pageSize, searchText);
+                setRowCount((int) newsDAO.countByTitle(searchText));
+                return allPaged;
+            }
+        };
+    }
 
+    public void hide(UUID id) {
+        newsDAO.hide(id);
+    }
+
+    public void show(UUID id) {
+        newsDAO.show(id);
+    }
+
+    public String getTags() {
+        String result = "";
+        if (news != null) {
+            Set<Tag> tags = news.getTags();
+            String delimiter = "";
+            for (Tag tag : tags) {
+                result += delimiter + tag.getName();
+                delimiter = "-";
+            }
+        }
+        return result;
+    }
+
+    public void setTags(String text) {
+        String[] tokens = text.split("-");
+        news.getTags().clear();
+        for (String token : tokens) {
+            String tagName = token.trim().toLowerCase();
+            if (tagName.length() > 0) {
+                Tag tag = tagDAO.getByName(tagName);
+                if (tag == null) {
+                    Tag newTag = new Tag();
+                    newTag.setName(tagName);
+                    tagDAO.saveOrUpdate(newTag);
+                    tag = newTag;
+                }
+                news.getTags().add(tag);
+            }
+        }
     }
 }

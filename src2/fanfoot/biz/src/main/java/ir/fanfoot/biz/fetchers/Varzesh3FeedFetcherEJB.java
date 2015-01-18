@@ -56,8 +56,6 @@ public class Varzesh3FeedFetcherEJB {
                         news.setHasImage(false); // TODO
                         news.setHasVideo(false); // TODO
                         news.setShown(true);
-                        news.setLink(feedItem.getLink().trim());
-                        news.setLongDescription(feedItem.getDescription().trim());
                         news.setNewsAgency(newsAgency);
                         news.setNumberOfVisits(0);
                         news.setPublishDate(new Date().getTime());
@@ -66,7 +64,7 @@ public class Varzesh3FeedFetcherEJB {
                         news.setSourceId(sourceId);
                         news.setSourceLink(feedItem.getLink().trim());
                         news.setSourcePublishDate(feedItem.getPublishDate());
-                        news.setSourceURL(feedItem.getUri().trim());
+                        news.setSourceLink(feedItem.getLink().trim());
                         news.setTitle(feedItem.getTitle().trim());
                         newsDAO.saveOrUpdate(news);
                         tagAssignerEJB.assignTags(news);

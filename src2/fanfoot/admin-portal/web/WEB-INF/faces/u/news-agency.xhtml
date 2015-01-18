@@ -16,7 +16,8 @@
         <ui:define name="content">
             <h1 class="heading">آژانس های خبری</h1>
             <h:form id="form-list">
-                <p:commandButton update=":edit-dialog" value="آژانس خبری جدید"
+                <p:commandButton update=":edit-dialog"
+                                 value="آژانس خبری جدید"
                                  actionListener="#{newsAgencyBean.prepareForAdd()}"
                                  oncomplete="PF('editDialog').show();"/>
                 <br/>

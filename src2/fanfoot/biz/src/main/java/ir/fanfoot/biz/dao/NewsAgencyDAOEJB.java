@@ -1,6 +1,7 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.NewsAgency;
+import ir.fanfoot.util.StringHelper;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -18,7 +19,7 @@ public class NewsAgencyDAOEJB extends AbstractDAO<NewsAgency> implements NewsAge
         try {
             return (NewsAgency) entityManager
                     .createQuery("SELECT newsAgency FROM NewsAgency newsAgency WHERE newsAgency.englishQualifiedName = :eqn")
-                    .setParameter("eqn", englishQualifiedName)
+                    .setParameter("eqn", StringHelper.correctPersianCharacters(englishQualifiedName))
                     .getSingleResult();
         } catch (Exception e) {
             return null;

@@ -1,6 +1,7 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.Team;
+import ir.fanfoot.util.StringHelper;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -18,7 +19,7 @@ public class TeamDAOEJB extends AbstractDAO<Team> implements TeamDAO {
         try {
             return (Team) entityManager
                     .createQuery("SELECT e FROM " + getEntityName() + " e WHERE e.englishName = :englishName")
-                    .setParameter("englishName", englishName.trim().toLowerCase())
+                    .setParameter("englishName", StringHelper.correctPersianCharacters(englishName.trim().toLowerCase()))
                     .getSingleResult();
         } catch (Exception e) {
             return null;

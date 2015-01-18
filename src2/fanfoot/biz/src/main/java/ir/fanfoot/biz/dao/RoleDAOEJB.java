@@ -1,6 +1,7 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.Role;
+import ir.fanfoot.util.StringHelper;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -19,7 +20,7 @@ public class RoleDAOEJB extends AbstractDAO<Role> implements RoleDAO {
         try {
             return (Role) entityManager
                     .createQuery("SELECT e FROM " + getEntityName() + " e WHERE e.name = :name")
-                    .setParameter("name", name)
+                    .setParameter("name", StringHelper.correctPersianCharacters(name))
                     .getSingleResult();
         } catch (Exception e) {
             if (!(e instanceof NoResultException)) {

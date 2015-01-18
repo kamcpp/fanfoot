@@ -25,12 +25,8 @@ public class News {
     private String sourceId;
     @Column(name = "short_description", length = 2048, nullable = true)
     private String shortDescription;
-    @Column(name = "long_description", length = 4096, nullable = true)
-    private String longDescription;
     @Column(name = "full_description", length = 204800, nullable = true)
     private String fullDescription;
-    @Column(name = "source_url", length = 2048, nullable = true)
-    private String sourceURL;
     @Column(name = "author", length = 1024, nullable = true)
     private String author;
     @Sorted(order = 1, sort = Sorted.Sort.DESCENDING)
@@ -40,8 +36,6 @@ public class News {
     private long publishDate;
     @Column(name = "number_of_visitors", nullable = false)
     private int numberOfVisits;
-    @Column(name = "link", length = 2048, nullable = true)
-    private String link;
     @Column(name = "source_link", length = 2048, nullable = true)
     private String sourceLink;
     @Column(name = "has_image", nullable = false)
@@ -56,7 +50,7 @@ public class News {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", nullable = true)
     private Question question;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "news__tag",
             schema = "public",
             joinColumns = @JoinColumn(name = "news_id", nullable = false),
@@ -95,28 +89,12 @@ public class News {
         this.shortDescription = shortDescription;
     }
 
-    public String getLongDescription() {
-        return longDescription;
-    }
-
-    public void setLongDescription(String longDescription) {
-        this.longDescription = longDescription;
-    }
-
     public String getFullDescription() {
         return fullDescription;
     }
 
     public void setFullDescription(String fullDescription) {
         this.fullDescription = fullDescription;
-    }
-
-    public String getSourceURL() {
-        return sourceURL;
-    }
-
-    public void setSourceURL(String sourceURL) {
-        this.sourceURL = sourceURL;
     }
 
     public String getAuthor() {
@@ -149,14 +127,6 @@ public class News {
 
     public void setNumberOfVisits(int numberOfVisits) {
         this.numberOfVisits = numberOfVisits;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public String getSourceLink() {

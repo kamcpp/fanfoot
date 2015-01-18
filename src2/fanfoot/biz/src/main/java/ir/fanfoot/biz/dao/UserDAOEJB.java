@@ -1,6 +1,7 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.User;
+import ir.fanfoot.util.StringHelper;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -22,7 +23,7 @@ public class UserDAOEJB extends AbstractDAO<User> implements UserDAO {
         try {
             return (User) entityManager
                     .createQuery("SELECT e FROM " + getEntityName() + " e WHERE e.username = :username")
-                    .setParameter("username", username)
+                    .setParameter("username", StringHelper.correctPersianCharacters(username))
                     .getSingleResult();
         } catch (Exception e) {
             return null;
