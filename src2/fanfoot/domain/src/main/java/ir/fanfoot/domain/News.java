@@ -38,6 +38,10 @@ public class News {
     private int numberOfVisits;
     @Column(name = "source_link", length = 2048, nullable = true)
     private String sourceLink;
+    @Column(name = "image_file_extension", length = 64, nullable = true)
+    private String imageFileExtension;
+    @Column(name = "video_file_extension", length = 64, nullable = true)
+    private String videoFileExtension;
     @Column(name = "has_image", nullable = false)
     private boolean hasImage;
     @Column(name = "has_video", nullable = false)
@@ -137,6 +141,22 @@ public class News {
         this.sourceLink = sourceLink;
     }
 
+    public String getImageFileExtension() {
+        return imageFileExtension;
+    }
+
+    public void setImageFileExtension(String imageFileExtension) {
+        this.imageFileExtension = imageFileExtension;
+    }
+
+    public String getVideoFileExtension() {
+        return videoFileExtension;
+    }
+
+    public void setVideoFileExtension(String videoFileExtension) {
+        this.videoFileExtension = videoFileExtension;
+    }
+
     public boolean isHasImage() {
         return hasImage;
     }
@@ -178,7 +198,7 @@ public class News {
     }
 
     public Set<Tag> getTags() {
-        if(tags == null) {
+        if (tags == null) {
             tags = new HashSet<>();
         }
         return tags;
@@ -186,5 +206,25 @@ public class News {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    @Transient
+    public String getImageFileName() {
+        return id + "." + imageFileExtension;
+    }
+
+    @Transient
+    public String getImageFileNameByWidth(int width) {
+        return id + "-" + width + "w." + imageFileExtension;
+    }
+
+    @Transient
+    public String getImageFileNameByHeight(int height) {
+        return id + "-" + height + "h." + imageFileExtension;
+    }
+
+    @Transient
+    public String getImageFilePathByWidthAndHeight(int width, int height) {
+        return id + "-" + width + "x" + height + "." + imageFileExtension;
     }
 }

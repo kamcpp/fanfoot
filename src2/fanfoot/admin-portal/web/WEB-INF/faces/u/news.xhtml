@@ -74,13 +74,21 @@
                         <h:outputText value="#{news.newsAgency.localName}"/>
                     </p:column>
                     <p:column headerText="عنوان خبر" style="text-align: right; direction: rtl;">
-                        <h:outputText style="color: blue" value="#{news.title}"/><br/>
-                        <h:outputText style="font-size: 10px" value="#{news.shortDescription}"/>
+                        <p:commandLink style="text-decoration: none" update=":edit-dialog"
+                                       actionListener="#{newsBean.select(news.id)}"
+                                       oncomplete="PF('editDialog').show();">
+                            <h:outputText styleClass="news-title" value="#{news.title}"/><br/>
+                            <h:outputText styleClass="news-short-description" value="#{news.shortDescription}"/>
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="" style="text-align: center; width: 70px">
+                        <h:graphicImage rendered="#{news.hasImage}" value="/files/images/#{news.getImageFileNameByWidth(64)}"/>
+                        <h:graphicImage rendered="#{news.hasVideo}" value="/res/images/video.png"/>
                     </p:column>
                 </p:dataTable>
             </h:form>
-            <p:dialog id="edit-dialog" header="فرم ویرایش خبر" widgetVar="editDialog"
-                      modal="true" appendToBody="true" width="850px" height="600px"
+            <p:dialog id="edit-dialog" header="فرم ویرایش خبر" dir="rtl" widgetVar="editDialog"
+                      modal="true" appendToBody="true" width="850px" height="700px"
                       closable="false" resizable="false">
                 <h:form style="direction: rtl;">
                     <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
@@ -97,7 +105,8 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                               لینک<p:inputText style="width: 100%; direction: ltr;" value="#{newsBean.news.sourceLink}" readonly="true"/>
+                                لینک<p:inputText style="width: 100%; direction: ltr;"
+                                                 value="#{newsBean.news.sourceLink}" readonly="true"/>
                             </td>
                         </tr>
                         <tr>
@@ -107,13 +116,15 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                عنوان خبر<p:inputText style="width: 100%;" value="#{newsBean.news.title}" required="true"
-                                                          requiredMessage="عنوان خبر الزامی است"/>
+                                عنوان خبر<p:inputText style="width: 100%;" value="#{newsBean.news.title}"
+                                                      required="true"
+                                                      requiredMessage="عنوان خبر الزامی است"/>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">
-                                توضیح کوتاه<p:inputTextarea style="width: 100%;" value="#{newsBean.news.shortDescription}"/>
+                                توضیح کوتاه<p:inputTextarea style="width: 100%;"
+                                                            value="#{newsBean.news.shortDescription}"/>
                             </td>
                         </tr>
                         <tr>

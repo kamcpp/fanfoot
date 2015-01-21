@@ -2,16 +2,22 @@ package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.News;
 import ir.fanfoot.domain.NewsAgency;
+import ir.fanfoot.domain.Tag;
 import ir.fanfoot.util.StringHelper;
 
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Stateless
 @Local(NewsDAO.class)
 public class NewsDAOEJB extends AbstractDAO<News> implements NewsDAO {
+
+    @EJB
+    private TagDAO tagDAO;
 
     public NewsDAOEJB() {
         super(News.class);
@@ -81,5 +87,32 @@ public class NewsDAOEJB extends AbstractDAO<News> implements NewsDAO {
         News news = getById(id);
         news.setShown(true);
         saveOrUpdate(news);
+    }
+
+    @Override
+    public void addTags(News news, String[] tagStrings) {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < tagStrings.length; i++) {
+            list.add(tagStrings[i]);
+        }
+        addTags(news, list);
+    }
+
+    @Override
+    public void addTags(News news, List<String> tagStrings) {
+        news.getTags().clear();
+        for (String tagString : tagStrings) {
+            String tagName = tagString.trim().toLowerCase();
+            if (tagName.length() > 0) {
+                Tag tag = tagDAO.getByName(tagName);
+                if (tag == null) {
+                    Tag newTag = new Tag();
+                    newTag.setName(tagName);
+                    tagDAO.saveOrUpdate(newTag);
+                    tag = newTag;
+                }
+                news.getTags().add(tag);
+            }
+        }
     }
 }

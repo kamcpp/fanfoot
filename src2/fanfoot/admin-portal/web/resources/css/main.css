@@ -40,6 +40,16 @@ button {
     color: black;
 }
 
+.news-title {
+    color: blue;
+    font-size: 12px;
+}
+
+.news-short-description {
+    color: black;
+    font-size: 10px;
+}
+
 #main {
     width: 1000px;
     margin-left: 50px;

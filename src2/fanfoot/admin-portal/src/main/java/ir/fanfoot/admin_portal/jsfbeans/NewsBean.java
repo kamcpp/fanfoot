@@ -125,19 +125,6 @@ public class NewsBean {
 
     public void setTags(String text) {
         String[] tokens = text.split("-");
-        news.getTags().clear();
-        for (String token : tokens) {
-            String tagName = token.trim().toLowerCase();
-            if (tagName.length() > 0) {
-                Tag tag = tagDAO.getByName(tagName);
-                if (tag == null) {
-                    Tag newTag = new Tag();
-                    newTag.setName(tagName);
-                    tagDAO.saveOrUpdate(newTag);
-                    tag = newTag;
-                }
-                news.getTags().add(tag);
-            }
-        }
+        newsDAO.addTags(news, tokens);
     }
 }

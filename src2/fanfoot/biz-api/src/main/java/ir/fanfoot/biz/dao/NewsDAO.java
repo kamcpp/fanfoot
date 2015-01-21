@@ -25,4 +25,8 @@ public interface NewsDAO extends GenericDAO<News> {
     void hide(UUID id);
 
     void show(UUID id);
+
+    void addTags(News news, String[] tagStrings);
+
+    void addTags(News news, List<String> tagStrings);
 }

@@ -10,7 +10,7 @@
         <servlet-class>ir.fanfoot.admin_portal.servlets.FileServlet</servlet-class>
         <init-param>
             <param-name>basePath</param-name>
-            <param-value>/home/kamran/.fanfoot</param-value>
+            <param-value>/home/kamran/fanfoot</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
