@@ -83,6 +83,7 @@ public class Varzesh3FetcherEJB {
                     }
                 }
             }
+            System.out.println("Fetched.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,7 +120,19 @@ public class Varzesh3FetcherEJB {
             matcher = pattern.matcher(tagItemsString.trim());
             List<String> tags = new ArrayList<>();
             while (matcher.find()) {
-                tags.add(matcher.group(1));
+                String tagString = matcher.group(1);
+                tagString = tagString
+                        .replace("(", "")
+                        .replace(")", "")
+                        .replace("[", "")
+                        .replace("]", "").trim();
+                try {
+                    Integer.parseInt(tagString);
+                } catch (Exception e) {
+                    if (tagString.length() > 2) {
+                        tags.add(tagString);
+                    }
+                }
             }
             newsDAO.addTags(news, tags);
         }
@@ -128,6 +141,7 @@ public class Varzesh3FetcherEJB {
 
     private void downloadImage(News news, String imageLink) throws IOException, URISyntaxException {
         news.setHasImage(true);
+        news.setImageLink(imageLink);
         news.setImageFileExtension(FilenameUtils.getExtension(imageLink));
         final String fullOriginalImageFilePath = configurationEJB.getBaseDownloadPath() + "images/" + news.getId() + "." + news.getImageFileExtension();
         final String resizedImageFixedToWidth64FilePath = configurationEJB.getBaseDownloadPath() + "images/" + news.getImageFileNameByWidth(64);
@@ -145,6 +159,7 @@ public class Varzesh3FetcherEJB {
 
     private void downloadVideo(News news, String videoLink) throws IOException, URISyntaxException {
         news.setHasVideo(true);
+        news.setVideoLink(videoLink);
         news.setVideoFileExtension(FilenameUtils.getExtension(videoLink));
         String videoFilePath = configurationEJB.getBaseDownloadPath() + "videos/" + news.getId() + "." + news.getVideoFileExtension();
         downloaderEJB.downloadToFile(videoLink, videoFilePath);

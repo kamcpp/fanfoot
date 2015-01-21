@@ -117,14 +117,15 @@ public class NewsBean {
             String delimiter = "";
             for (Tag tag : tags) {
                 result += delimiter + tag.getName();
-                delimiter = "-";
+                delimiter = ",";
             }
         }
         return result;
     }
 
     public void setTags(String text) {
-        String[] tokens = text.split("-");
+        String[] tokens = text.split(",");
+        news.getTags().clear();
         newsDAO.addTags(news, tokens);
     }
 }

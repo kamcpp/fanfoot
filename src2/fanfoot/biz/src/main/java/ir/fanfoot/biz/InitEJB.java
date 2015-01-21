@@ -30,6 +30,9 @@ public class InitEJB {
     @EJB
     private ProfileDAO profileDAO;
 
+    @EJB
+    private TagDAO tagDAO;
+
     @Inject
     private HashProvider hashProvider;
 
@@ -106,6 +109,12 @@ public class InitEJB {
             profile.setTitle("MR.");
             profile.setUser(adminUser);
             profileDAO.saveOrUpdate(profile);
+        }
+        if (tagDAO.getByName("مپرسپولیس") == null) {
+            Tag tag = new Tag();
+            tag.setName("مپرسپولیس");
+            tag.setKeywords("پرسپولیس");
+            tagDAO.saveOrUpdate(tag);
         }
     }
 }

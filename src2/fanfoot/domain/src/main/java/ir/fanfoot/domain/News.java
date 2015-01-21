@@ -42,6 +42,10 @@ public class News {
     private String imageFileExtension;
     @Column(name = "video_file_extension", length = 64, nullable = true)
     private String videoFileExtension;
+    @Column(name = "image_link", length = 2048, nullable = true)
+    private String imageLink;
+    @Column(name = "video_link", length = 2048, nullable = true)
+    private String videoLink;
     @Column(name = "has_image", nullable = false)
     private boolean hasImage;
     @Column(name = "has_video", nullable = false)
@@ -155,6 +159,22 @@ public class News {
 
     public void setVideoFileExtension(String videoFileExtension) {
         this.videoFileExtension = videoFileExtension;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    public String getVideoLink() {
+        return videoLink;
+    }
+
+    public void setVideoLink(String videoLink) {
+        this.videoLink = videoLink;
     }
 
     public boolean isHasImage() {

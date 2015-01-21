@@ -92,26 +92,31 @@ public class NewsDAOEJB extends AbstractDAO<News> implements NewsDAO {
     @Override
     public void addTags(News news, String[] tagStrings) {
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < tagStrings.length; i++) {
-            list.add(tagStrings[i]);
+        for (String tagString : tagStrings) {
+            list.add(tagString);
         }
         addTags(news, list);
     }
 
     @Override
     public void addTags(News news, List<String> tagStrings) {
-        news.getTags().clear();
         for (String tagString : tagStrings) {
-            String tagName = tagString.trim().toLowerCase();
-            if (tagName.length() > 0) {
-                Tag tag = tagDAO.getByName(tagName);
-                if (tag == null) {
-                    Tag newTag = new Tag();
-                    newTag.setName(tagName);
-                    tagDAO.saveOrUpdate(newTag);
-                    tag = newTag;
+            tagString = tagString.trim().toLowerCase();
+            if (tagString.length() > 0) {
+                String[] tokens = tagString.split("@"); // TODO Parse or not to parse with whitespace! Don't remove this line!
+                for (String token : tokens) {
+                    String tagName = token.trim();
+                    if (tagName.length() > 0) {
+                        Tag tag = tagDAO.getByName(tagName);
+                        if (tag == null) {
+                            Tag newTag = new Tag();
+                            newTag.setName(tagName);
+                            tagDAO.saveOrUpdate(newTag);
+                            tag = newTag;
+                        }
+                        news.getTags().add(tag);
+                    }
                 }
-                news.getTags().add(tag);
             }
         }
     }
