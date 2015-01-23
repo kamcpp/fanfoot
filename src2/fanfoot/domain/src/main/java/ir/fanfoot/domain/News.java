@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -226,6 +227,16 @@ public class News {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    @Transient
+    public String getFanfootImageLink() {
+        return "/files/images/" + getImageFileName() + "?" + new Random().nextLong();
+    }
+
+    @Transient
+    public String getFanfootImageLinkByWidth(int width) {
+        return "/files/images/" + getImageFileNameByWidth(width) + "?" + new Random().nextLong();
     }
 
     @Transient

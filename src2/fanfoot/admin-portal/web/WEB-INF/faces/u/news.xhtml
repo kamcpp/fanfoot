@@ -82,15 +82,16 @@
                         </p:commandLink>
                     </p:column>
                     <p:column headerText="" style="text-align: center; width: 70px">
-                        <h:graphicImage rendered="#{news.hasImage}" value="/files/images/#{news.getImageFileNameByWidth(64)}"/>
+                        <h:graphicImage rendered="#{news.hasImage}"
+                                        value="#{news.getFanfootImageLinkByWidth(64)}"/>
                         <h:graphicImage rendered="#{news.hasVideo}" value="/res/images/video.png"/>
                     </p:column>
                 </p:dataTable>
             </h:form>
             <p:dialog id="edit-dialog" header="فرم ویرایش خبر" dir="rtl" widgetVar="editDialog"
-                      modal="true" appendToBody="true" width="850px" height="700px"
+                      modal="true" appendToBody="true" width="850px" height="520px"
                       closable="false" resizable="false">
-                <h:form style="direction: rtl;">
+                <h:form enctype="multipart/form-data" style="direction: rtl;">
                     <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
                     <table style="width: 100%; padding: 10px;">
                         <tr>
@@ -104,26 +105,54 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td>
                                 لینک<p:inputText style="width: 100%; direction: ltr;"
                                                  value="#{newsBean.news.sourceLink}" readonly="true"/>
+                                <a href="#{newsBean.news.sourceLink}" target="_blank">لینک اصلی</a>
+                            </td>
+                            <td style="text-align: center; vertical-align: top;" rowspan="4">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="25px;">
+                                            تصویر یا ویدیو
+                                        </td>
+                                    </tr>
+                                    <tr style="vertical-align: middle">
+                                        <td>
+                                            <h:graphicImage id="news-image" rendered="#{newsBean.news.hasImage}"
+                                                            value="#{newsBean.news.getFanfootImageLinkByWidth(200)}"/>
+                                            <h:graphicImage id="news-video" rendered="#{newsBean.news.hasVideo}"
+                                                            value="/res/images/video.png"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:fileUpload description="تصویر"
+                                                          rendered="#{newsBean.news.hasImage}"
+                                                          update="news-image"
+                                                          allowTypes="/(\.|\/)(jpe?g|png)$/"
+                                                          auto="true"
+                                                          fileUploadListener="#{newsBean.imageUpload}"/>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td>
                                 نویسنده<p:inputText style="width: 100%;" value="#{newsBean.news.author}"/>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td>
                                 عنوان خبر<p:inputText style="width: 100%;" value="#{newsBean.news.title}"
                                                       required="true"
                                                       requiredMessage="عنوان خبر الزامی است"/>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
-                                توضیح کوتاه<p:inputTextarea style="width: 100%;"
+                            <td>
+                                توضیح کوتاه<p:inputTextarea scrollHeight="50" style="width: 100%;"
                                                             value="#{newsBean.news.shortDescription}"/>
                             </td>
                         </tr>
@@ -134,7 +163,8 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                متن کامل<p:editor style="width: 100%;" value="#{newsBean.news.fullDescription}"/>
+                                متن کامل<p:editor style="width: 100%;" height="150"
+                                                  value="#{newsBean.news.fullDescription}"/>
                             </td>
                         </tr>
                         <tr>

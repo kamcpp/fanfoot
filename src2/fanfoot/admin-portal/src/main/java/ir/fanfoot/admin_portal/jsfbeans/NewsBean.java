@@ -1,11 +1,15 @@
 package ir.fanfoot.admin_portal.jsfbeans;
 
+import ir.fanfoot.biz.Configuration;
 import ir.fanfoot.biz.dao.NewsDAO;
 import ir.fanfoot.biz.dao.TagDAO;
 import ir.fanfoot.domain.Tag;
+import ir.fanfoot.util.ImageResizer;
 import ir.fanfoot.util.JalaliCalendar;
 import ir.fanfoot.domain.News;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -13,7 +17,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
 import javax.transaction.SystemException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.*;
 
 @ManagedBean
@@ -22,8 +29,16 @@ public class NewsBean {
 
     @EJB
     private NewsDAO newsDAO;
+
     @EJB
     private TagDAO tagDAO;
+
+    @EJB
+    private Configuration configuration;
+
+    @Inject
+    private ImageResizer imageResizer;
+
     private News news;
     private LazyDataModel<News> dataModel;
     private String searchText;
@@ -127,5 +142,36 @@ public class NewsBean {
         String[] tokens = text.split(",");
         news.getTags().clear();
         newsDAO.addTags(news, tokens);
+    }
+
+    public void imageUpload(FileUploadEvent fileUploadEvent) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
+        String extension;
+        switch (fileUploadEvent.getFile().getContentType().toLowerCase()) {
+            case "image/jpeg":
+            case "image/jpg":
+                extension = "jpg";
+                break;
+            case "image/png":
+                extension = "png";
+                break;
+            default:
+                throw new RuntimeException("Content type not supported.");
+        }
+        String filePath = configuration.getBaseDownloadPath() + "images/" + news.getId() + "." + extension;
+        String filePathWidth64 = configuration.getBaseDownloadPath() + "images/" + news.getId() + "-64w." + extension;
+        String filePathWidth128 = configuration.getBaseDownloadPath() + "images/" + news.getId() + "-128w." + extension;
+        String filePathWidth200 = configuration.getBaseDownloadPath() + "images/" + news.getId() + "-200w." + extension;
+        try {
+            OutputStream out = new FileOutputStream(filePath);
+            IOUtils.copy(fileUploadEvent.getFile().getInputstream(), out);
+            out.close();
+            news.setImageFileExtension(extension);
+            imageResizer.resizeWithWidthFixed(filePath, filePathWidth64, 64);
+            imageResizer.resizeWithWidthFixed(filePath, filePathWidth128, 128);
+            imageResizer.resizeWithWidthFixed(filePath, filePathWidth200, 200);
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 }

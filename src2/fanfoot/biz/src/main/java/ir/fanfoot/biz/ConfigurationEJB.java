@@ -1,13 +1,15 @@
 package ir.fanfoot.biz;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import java.io.File;
 
 @Singleton
 @LocalBean
-public class ConfigurationEJB {
+@Local(Configuration.class)
+public class ConfigurationEJB implements Configuration {
 
     @PostConstruct
     public void init() {

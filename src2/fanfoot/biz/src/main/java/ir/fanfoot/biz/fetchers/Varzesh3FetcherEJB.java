@@ -55,7 +55,6 @@ public class Varzesh3FetcherEJB {
     @Schedule(hour = "*", minute = "*/1", persistent = false)
     public void fetch() {
         try {
-            System.out.println("Fetching varzesh3 ...");
             newsAgency = newsAgencyDAO.getByEnglishQualifiedName("varzesh3");
             List<FeedItem> feedItems = feedFetcher.fetch(configurationEJB.getVarzesh3RSSURL());
             Pattern pattern = Pattern.compile("itemid=(\\d+)");
@@ -83,7 +82,6 @@ public class Varzesh3FetcherEJB {
                     }
                 }
             }
-            System.out.println("Fetched.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,11 +143,15 @@ public class Varzesh3FetcherEJB {
         news.setImageFileExtension(FilenameUtils.getExtension(imageLink));
         final String fullOriginalImageFilePath = configurationEJB.getBaseDownloadPath() + "images/" + news.getId() + "." + news.getImageFileExtension();
         final String resizedImageFixedToWidth64FilePath = configurationEJB.getBaseDownloadPath() + "images/" + news.getImageFileNameByWidth(64);
+        final String resizedImageFixedToWidth128FilePath = configurationEJB.getBaseDownloadPath() + "images/" + news.getImageFileNameByWidth(128);
+        final String resizedImageFixedToWidth200FilePath = configurationEJB.getBaseDownloadPath() + "images/" + news.getImageFileNameByWidth(200);
         downloaderEJB.downloadToFile(imageLink, fullOriginalImageFilePath, new Runnable() {
             @Override
             public void run() {
                 try {
                     imageResizer.resizeWithWidthFixed(fullOriginalImageFilePath, resizedImageFixedToWidth64FilePath, 64);
+                    imageResizer.resizeWithWidthFixed(fullOriginalImageFilePath, resizedImageFixedToWidth128FilePath, 128);
+                    imageResizer.resizeWithWidthFixed(fullOriginalImageFilePath, resizedImageFixedToWidth200FilePath, 200);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
