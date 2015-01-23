@@ -1,4 +1,4 @@
-package ir.fanfoot.util;
+package ir.fanfoot.util.http;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

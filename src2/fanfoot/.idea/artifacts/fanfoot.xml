@@ -28,6 +28,7 @@
         <element id="library" level="project" name="Maven: org.hibernate:hibernate-core:4.3.6.Final" />
         <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
         <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+        <element id="library" level="project" name="Maven: com.ibm.icu:icu4j:53.1" />
       </element>
       <element id="artifact" artifact-name="biz" />
       <element id="artifact" artifact-name="admin-portal" />

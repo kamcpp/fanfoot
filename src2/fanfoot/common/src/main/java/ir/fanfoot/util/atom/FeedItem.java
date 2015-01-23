@@ -1,4 +1,4 @@
-package ir.fanfoot.util;
+package ir.fanfoot.util.atom;
 
 public class FeedItem {
     private long publishDate;

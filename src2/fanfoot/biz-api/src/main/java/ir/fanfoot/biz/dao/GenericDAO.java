@@ -16,4 +16,8 @@ public interface GenericDAO <T> {
     List<T> getAllPaged(int first, int pageSize);
 
     long count();
+
+    List<T> getAllPagedBySearchText(int first, int pageSize, String searchText);
+
+    long countBySearchText(String searchText);
 }

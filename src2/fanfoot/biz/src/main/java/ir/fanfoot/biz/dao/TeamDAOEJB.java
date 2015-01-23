@@ -1,10 +1,11 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.Team;
-import ir.fanfoot.util.StringHelper;
+import ir.fanfoot.util.i18n.StringHelper;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import java.util.List;
 
 @Stateless
 @Local(TeamDAO.class)
@@ -24,5 +25,15 @@ public class TeamDAOEJB extends AbstractDAO<Team> implements TeamDAO {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Team> getAllPagedBySearchText(int first, int pageSize, String searchText) {
+        return null;
+    }
+
+    @Override
+    public long countBySearchText(String searchText) {
+        return 0;
     }
 }

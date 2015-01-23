@@ -1,5 +1,7 @@
 package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.EnglishNumbers;
+import ir.fanfoot.annotations.PersianNumbers;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -25,20 +27,28 @@ public class User {
     private long createDate;
     @Column(name = "last_login_date", nullable = true)
     private Long lastLoginDate;
+    @EnglishNumbers
     @Column(name = "username", length = 20, nullable = false, unique = true)
     private String username;
+    @EnglishNumbers
     @Column(name = "email", length = 512, nullable = false, unique = true)
     private String email;
+    @EnglishNumbers
     @Column(name = "password_hash", length = 1024, nullable = false)
     private String passwordHash;
+    @PersianNumbers
     @Column(name = "phone", length = 256, nullable = true)
     private String phone;
+    @PersianNumbers
     @Column(name = "cellphone", length = 256, nullable = true)
     private String cellphone;
+    @PersianNumbers
     @Column(name = "address", length = 2048, nullable = true)
     private String address;
+    @EnglishNumbers
     @Column(name = "second_email", length = 512, nullable = true)
     private String secondEmail;
+    @PersianNumbers
     @Column(name = "about_me", length = 4096, nullable = true)
     private String aboutMe;
     @ManyToOne(fetch = FetchType.EAGER)

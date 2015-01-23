@@ -1,10 +1,11 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.Token;
-import ir.fanfoot.util.StringHelper;
+import ir.fanfoot.util.i18n.StringHelper;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import java.util.List;
 
 @Stateless
 @Local(TokenDAO.class)
@@ -41,5 +42,15 @@ public class TokenDAOEJB extends AbstractDAO<Token> implements TokenDAO {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Token> getAllPagedBySearchText(int first, int pageSize, String searchText) {
+        return null;
+    }
+
+    @Override
+    public long countBySearchText(String searchText) {
+        return 0;
     }
 }

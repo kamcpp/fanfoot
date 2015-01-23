@@ -12,7 +12,7 @@
 <h:body>
     <ui:composition template="../templates/layout.xhtml">
         <ui:define name="head">
-            <title>پنل مدیریت فنفوت - اخبار</title>
+            <title>اخبار - پنل مدیریت فن فوت</title>
         </ui:define>
         <ui:define name="content">
             <h1 style="float: right;" class="heading">اخبار</h1>
@@ -32,12 +32,14 @@
                                  actionListener="#{newsBean.prepareForAdd()}"
                                  oncomplete="PF('editDialog').show();"
                                  update=":edit-dialog"/>
-                <p:commandButton value="بروزرسانی" actionListener="#{newsBean.init()}" update="list-dt"/> <br/>
+                <p:commandButton value="نمایش همه و بروز رسانی" actionListener="#{newsBean.init()}" update="list-dt"/>
+                <br/>
                 <p:dataTable id="list-dt" var="news" value="#{newsBean.dataModel}"
                              lazy="true" paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                              rowsPerPageTemplate="5,10,20,50,100"
                              scrollable="true" scrollHeight="350"
+                             liveResize="true"
                              rowStyleClass="#{news.shown ? 'normal-row' : 'not-shown-row'}">
                     <p:column headerText="مدیریت" style="text-align: right; width: 300px;">
                         <p:button styleClass="news-management-button" value="تعریف سوال"
@@ -45,7 +47,7 @@
                         <p:button styleClass="news-management-button" value="لینک اصلی"
                                   onclick="window.open('#{news.sourceLink}')"/>
                         <p:commandButton styleClass="news-management-button" value="حذف"
-                                         onclick="return confirm('آیا مطمين هستید?');"
+                                         onclick="return confirm('Are you sure?');"
                                          update=":form-list:list-dt"
                                          actionListener="#{newsBean.delete(news.id)}"/>
                         <p:commandButton styleClass="news-management-button" value="ویرایش"
@@ -90,7 +92,7 @@
             </h:form>
             <p:dialog id="edit-dialog" header="فرم ویرایش خبر" dir="rtl" widgetVar="editDialog"
                       modal="true" appendToBody="true" width="850px" height="520px"
-                      closable="false" resizable="false">
+                      closable="false" resizable="true">
                 <h:form enctype="multipart/form-data" style="direction: rtl;">
                     <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
                     <table style="width: 100%; padding: 10px;">
@@ -113,7 +115,7 @@
                             <td style="text-align: center; vertical-align: top;" rowspan="4">
                                 <table style="width: 100%;">
                                     <tr>
-                                        <td style="25px;">
+                                        <td style="height: 25px;">
                                             تصویر یا ویدیو
                                         </td>
                                     </tr>
@@ -121,17 +123,23 @@
                                         <td>
                                             <h:graphicImage id="news-image" rendered="#{newsBean.news.hasImage}"
                                                             value="#{newsBean.news.getFanfootImageLinkByWidth(200)}"/>
-                                            <h:graphicImage id="news-video" rendered="#{newsBean.news.hasVideo}"
-                                                            value="/res/images/video.png"/>
+                                            <h:outputLabel rendered="#{newsBean.news.hasVideo}">
+                                                <video width="250" controls="controls">
+                                                    <source src="#{newsBean.news.videoLink}" type="video/mp4" />
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </h:outputLabel>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td style="text-align: center;">
                                             <p:fileUpload description="تصویر"
                                                           rendered="#{newsBean.news.hasImage}"
                                                           update="news-image"
                                                           allowTypes="/(\.|\/)(jpe?g|png)$/"
                                                           auto="true"
+                                                          label="انتخاب تصویر"
+                                                          style="width: 150px; margin: auto;"
                                                           fileUploadListener="#{newsBean.imageUpload}"/>
                                         </td>
                                     </tr>
@@ -152,8 +160,8 @@
                         </tr>
                         <tr>
                             <td>
-                                توضیح کوتاه<p:inputTextarea scrollHeight="50" style="width: 100%;"
-                                                            value="#{newsBean.news.shortDescription}"/>
+                                توضیح کوتاه<p:inputText style="width: 100%;"
+                                                        value="#{newsBean.news.shortDescription}"/>
                             </td>
                         </tr>
                         <tr>

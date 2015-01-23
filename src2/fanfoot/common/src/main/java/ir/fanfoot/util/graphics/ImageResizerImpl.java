@@ -1,4 +1,4 @@
-package ir.fanfoot.util;
+package ir.fanfoot.util.graphics;
 
 import org.apache.commons.io.FilenameUtils;
 

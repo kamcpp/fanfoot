@@ -1,5 +1,7 @@
 package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.EnglishNumbers;
+import ir.fanfoot.annotations.PersianNumbers;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,14 +18,19 @@ public class NewsAgency {
     @org.hibernate.annotations.Type(type = "pg-uuid")
     @Column(columnDefinition = "uuid")
     private UUID id;
+    @EnglishNumbers
     @Column(name = "english_name", length = 256, nullable = false)
     private String englishName;
+    @EnglishNumbers
     @Column(name = "english_qualified_name", length = 512, nullable = true)
     private String englishQualifiedName;
+    @PersianNumbers
     @Column(name = "local_name", length = 512, nullable = false)
     private String localName;
+    @EnglishNumbers
     @Column(name = "website", length = 1024, nullable = true)
     private String website;
+    @PersianNumbers
     @Column(name = "description", length = 5120, nullable = true)
     private String description;
 

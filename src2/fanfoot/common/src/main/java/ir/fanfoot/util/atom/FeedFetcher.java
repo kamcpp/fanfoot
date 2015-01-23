@@ -1,4 +1,4 @@
-package ir.fanfoot.util;
+package ir.fanfoot.util.atom;
 
 import com.sun.syndication.io.FeedException;
 

@@ -1,5 +1,6 @@
 package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.EnglishNumbers;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -25,11 +26,14 @@ public class Token {
     private Long expiredDate;
     @Column(name = "duration", nullable = false)
     private int duration;
+    @EnglishNumbers
     @Column(name = "value", nullable = false)
     private String value;
+    @EnglishNumbers
     @Column(name = "source", nullable = false)
     private String source;
     @Column(name = "reason", nullable = true)
+    @EnglishNumbers
     private String reason;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "site_user_id", nullable = false)

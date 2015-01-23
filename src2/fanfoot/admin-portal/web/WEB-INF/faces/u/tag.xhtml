@@ -11,55 +11,66 @@
 <h:body>
     <ui:composition template="../templates/layout.xhtml">
         <ui:define name="head">
-            <title>Tags - FanFoot Admin Portal</title>
+            <title>برچسب ها - پنل مدیریت فن فوت</title>
         </ui:define>
         <ui:define name="content">
-            <h1 class="heading">Tags</h1>
-            <h:form id="form-list">
-                <p:commandButton update=":edit-dialog" value="ADD TAG"
+            <h1 style="float: right;" class="heading">برچسب ها</h1>
+            <br/>
+            <br/>
+            <h:form styleClass="ltr" id="form-list">
+                <div style="direction: rtl; float: right;">
+                    برای جست و جوی برچسب بخشی از نام آن یا کلمه کلیدی آن را وارد نمایید
+                    <br/>
+                    <br/>
+                    <p:inputText value="#{tagBean.searchText}"/>
+                    <p:commandButton value="جست و جو" actionListener="#{tagBean.search()}" update="list-dt"/>
+                </div>
+                <br/>
+                <br/>
+                <p:commandButton update=":edit-dialog" value="برچسب جدید"
                                  actionListener="#{tagBean.prepareForAdd()}"
                                  oncomplete="PF('editDialog').show();"/>
+                <p:commandButton value="نمایش همه و بروزرسانی" actionListener="#{tagBean.init()}" update="list-dt"/>
                 <br/>
-                <p:dataTable id="list-dt" var="tag" value="#{tagBean.all}">
-                    <p:column headerText="ID">
-                        <h:outputText value="#{tag.id}"/>
-                    </p:column>
-                    <p:column headerText="Name">
-                        <h:outputText value="#{tag.name}"/>
-                    </p:column>
-                    <p:column headerText="Keywords">
-                        <h:outputText value="#{tag.keywords}"/>
-                    </p:column>
-                    <p:column headerText="EDIT" style="text-align: center">
-                        <p:commandButton value="EDIT" update=":edit-dialog"
+                <p:dataTable id="list-dt" var="tag" value="#{tagBean.dataModel}"
+                             lazy="true" paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,20,50,100"
+                             scrollable="true" scrollHeight="350">
+                    <p:column headerText="مدیریت" style="text-align: right; width: 300px;">
+                        <p:commandButton styleClass="news-management-button" value="حذف"
+                                         onclick="return confirm('Are you sure?');"
+                                         update=":form-list:list-dt"
+                                         actionListener="#{tagBean.delete(tag.id)}"/>
+                        <p:commandButton styleClass="news-management-button" value="ویرایش" update=":edit-dialog"
                                          actionListener="#{tagBean.select(tag.id)}"
                                          oncomplete="PF('editDialog').show();"/>
                     </p:column>
-                    <p:column headerText="DELETE" style="text-align: center">
-                        <p:commandButton value="DELETE" onclick="return confirm('Are you sure?');"
-                                         update=":form-list:list-dt"
-                                         actionListener="#{tagBean.delete(tag.id)}"/>
+                    <p:column headerText="کلمات کلیدی" style="text-align: center">
+                        <h:outputText value="#{tag.keywords}"/>
+                    </p:column>
+                    <p:column headerText="نام برچسب" style="text-align: center">
+                        <h:outputText value="#{tag.name}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>
-            <p:dialog id="edit-dialog" header="Add/Edit Tag" widgetVar="editDialog"
+            <p:dialog id="edit-dialog" header="فرم ویرایش برچسب" dir="rtl" widgetVar="editDialog"
                       modal="true" appendToBody="true" width="450px" height="250px"
                       closable="false" resizable="false">
                 <h:form>
                     <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
                     <p:panelGrid columns="2">
-                        ID <p:inputText value="#{tagBean.tag.id}" disabled="true"/><br/>
-                        Name <p:inputText value="#{tagBean.tag.name}" required="true"
-                                                requiredMessage="Name is required."/><br/>
-                        Keywords <p:inputTextarea value="#{tagBean.tag.keywords}" required="false" /><br/>
+                        شناسه <p:inputText value="#{tagBean.tag.id}" readonly="true"/><br/>
+                        نام <p:inputText value="#{tagBean.tag.name}" required="true"
+                                         requiredMessage="Name is required."/><br/>
+                        کلمات کلیدی <p:inputTextarea value="#{tagBean.tag.keywords}" required="false"/><br/>
                         <p:row>
-                            <p:commandButton value="CANCEL" style="color: red;"
+                            <p:commandButton value="لغو" style="color: red;"
                                              onclick="PF('editDialog').hide();"/>
-                            <p:commandButton value="SAVE" style="color: green;" update="growl,:form-list:list-dt"
+                            <p:commandButton value="ذخیره" style="color: green;" update="growl,:form-list:list-dt"
                                              actionListener="#{tagBean.saveOrUpdate()}"
                                              oncomplete="handleResponse(xhr, status, args);"/>
                         </p:row>
-
                     </p:panelGrid>
                 </h:form>
                 <script type="text/javascript">

@@ -4,9 +4,9 @@ import ir.fanfoot.biz.Configuration;
 import ir.fanfoot.biz.dao.NewsDAO;
 import ir.fanfoot.biz.dao.TagDAO;
 import ir.fanfoot.domain.Tag;
-import ir.fanfoot.util.ImageResizer;
-import ir.fanfoot.util.JalaliCalendar;
+import ir.fanfoot.util.graphics.ImageResizer;
 import ir.fanfoot.domain.News;
+import ir.fanfoot.util.i18n.DateTimeHelper;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
@@ -67,10 +67,6 @@ public class NewsBean {
         };
     }
 
-    public long getNumberOfShownNews() {
-        return newsDAO.countShown();
-    }
-
     public void saveOrUpdate() throws SystemException {
         newsDAO.saveOrUpdate(news);
         RequestContext.getCurrentInstance().addCallbackParam("processed", true);
@@ -99,19 +95,15 @@ public class NewsBean {
     }
 
     public String convertTimeWithTimeZome(long time) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeZone(TimeZone.getTimeZone("Asia/Tehran"));
-        cal.setTimeInMillis(time);
-        return JalaliCalendar.gregorianToJalali(new JalaliCalendar.YearMonthDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH))).toString() + " - " +
-                cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+        return DateTimeHelper.getPersianDateFromUtcEpoch(time);
     }
 
     public void search() {
         dataModel = new LazyDataModel<News>() {
             @Override
             public List<News> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-                List<News> allPaged = newsDAO.getAllPagedByTitle(first, pageSize, searchText);
-                setRowCount((int) newsDAO.countByTitle(searchText));
+                List<News> allPaged = newsDAO.getAllPagedBySearchText(first, pageSize, searchText);
+                setRowCount((int) newsDAO.countBySearchText(searchText));
                 return allPaged;
             }
         };

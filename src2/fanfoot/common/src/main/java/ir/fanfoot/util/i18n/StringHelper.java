@@ -1,4 +1,4 @@
-package ir.fanfoot.util;
+package ir.fanfoot.util.i18n;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -38,5 +38,39 @@ public class StringHelper {
                 u.getQuery(),
                 u.getRef()).
                 toURL();
+    }
+
+    public static String convertEnglishNumbersToPersianNumbers(String input) {
+        if (input == null) {
+            return null;
+        }
+        int diff = '۰' - '0';
+        String result = "";
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c >= '0' && c <= '9') {
+                result += (char) (c + diff);
+            } else {
+                result += c;
+            }
+        }
+        return result;
+    }
+
+    public static String convertPersianNumbersToEnglishNumbers(String input) {
+        if (input == null) {
+            return null;
+        }
+        int diff = '۰' - '0';
+        String result = "";
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c >= '۰' && c <= '۹') {
+                result += (char) (c - diff);
+            } else {
+                result += input.charAt(i);
+            }
+        }
+        return result;
     }
 }

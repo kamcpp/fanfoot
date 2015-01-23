@@ -1,5 +1,6 @@
-package ir.fanfoot.util;
+package ir.fanfoot.util.http;
 
+import ir.fanfoot.util.i18n.StringHelper;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

@@ -1,5 +1,7 @@
 package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.EnglishNumbers;
+import ir.fanfoot.annotations.PersianNumbers;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,7 +19,9 @@ public class Question {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @org.hibernate.annotations.Type(type = "pg-uuid")
     private UUID id;
+    @PersianNumbers
     @Column(name = "local_text", length = 2048, nullable = false)
+    @EnglishNumbers
     private String localText;
     @Column(name = "english_text", length = 2048, nullable = true)
     private String englishText;

@@ -1,6 +1,6 @@
 package ir.fanfoot.biz.fetchers;
 
-import ir.fanfoot.util.HttpDownloader;
+import ir.fanfoot.util.http.HttpDownloader;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.*;

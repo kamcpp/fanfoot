@@ -1,5 +1,6 @@
 package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.PersianNumbers;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -45,14 +46,19 @@ public class Profile {
     private long createDate;
     @Column(name = "last_edit_date", nullable = true)
     private Long lastEditDate;
+    @PersianNumbers
     @Column(name = "title", length = 64, nullable = false)
     private String title;
+    @PersianNumbers
     @Column(name = "first_name", length = 512, nullable = false)
     private String firstName;
+    @PersianNumbers
     @Column(name = "middle_name", length = 512, nullable = true)
     private String middleName;
+    @PersianNumbers
     @Column(name = "last_name", length = 512, nullable = false)
     private String lastName;
+    @PersianNumbers
     @Column(name = "status_message", length = 1024, nullable = false)
     private String statusMessage;
     @OneToOne(fetch = FetchType.LAZY)

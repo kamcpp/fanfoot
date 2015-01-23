@@ -1,7 +1,7 @@
 package ir.fanfoot.admin_portal.jsfbeans;
 
 import ir.fanfoot.biz.membership.*;
-import ir.fanfoot.util.HashProvider;
+import ir.fanfoot.util.crypto.HashProvider;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;

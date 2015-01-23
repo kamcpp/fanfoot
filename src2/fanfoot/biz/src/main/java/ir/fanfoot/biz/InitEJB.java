@@ -2,7 +2,7 @@ package ir.fanfoot.biz;
 
 import ir.fanfoot.biz.dao.*;
 import ir.fanfoot.domain.*;
-import ir.fanfoot.util.HashProvider;
+import ir.fanfoot.util.crypto.HashProvider;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

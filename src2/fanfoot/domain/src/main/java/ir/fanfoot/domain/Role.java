@@ -1,5 +1,6 @@
 package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.EnglishNumbers;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Role {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @org.hibernate.annotations.Type(type = "pg-uuid")
     private UUID id;
+    @EnglishNumbers
     @Column(name="name", length = 1024, nullable = false)
     private String name;
 

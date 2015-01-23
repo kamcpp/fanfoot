@@ -1,7 +1,9 @@
 package ir.fanfoot.biz.dao;
 
+import ir.fanfoot.annotations.EnglishNumbers;
+import ir.fanfoot.annotations.PersianNumbers;
 import ir.fanfoot.annotations.Sorted;
-import ir.fanfoot.util.StringHelper;
+import ir.fanfoot.util.i18n.StringHelper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -147,6 +149,12 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
                 field.setAccessible(true);
                 if (field.getType().getName().equals("java.lang.String")) {
                     String newValue = StringHelper.correctPersianCharacters((String) field.get(entity));
+                    if (field.isAnnotationPresent(PersianNumbers.class)) {
+                        newValue = StringHelper.convertEnglishNumbersToPersianNumbers(newValue);
+                    }
+                    if (field.isAnnotationPresent(EnglishNumbers.class)) {
+                        newValue = StringHelper.convertPersianNumbersToEnglishNumbers(newValue);
+                    }
                     field.set(entity, newValue);
                 }
             }

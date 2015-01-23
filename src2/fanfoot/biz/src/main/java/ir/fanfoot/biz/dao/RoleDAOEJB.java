@@ -1,11 +1,12 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.Role;
-import ir.fanfoot.util.StringHelper;
+import ir.fanfoot.util.i18n.StringHelper;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
+import java.util.List;
 
 @Stateless
 @Local(RoleDAO.class)
@@ -28,5 +29,15 @@ public class RoleDAOEJB extends AbstractDAO<Role> implements RoleDAO {
             }
             return null;
         }
+    }
+
+    @Override
+    public List<Role> getAllPagedBySearchText(int first, int pageSize, String searchText) {
+        return null;
+    }
+
+    @Override
+    public long countBySearchText(String searchText) {
+        return 0;
     }
 }

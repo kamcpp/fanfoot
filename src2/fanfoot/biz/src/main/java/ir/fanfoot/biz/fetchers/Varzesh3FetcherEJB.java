@@ -3,9 +3,13 @@ package ir.fanfoot.biz.fetchers;
 import ir.fanfoot.biz.ConfigurationEJB;
 import ir.fanfoot.biz.dao.NewsAgencyDAO;
 import ir.fanfoot.biz.dao.NewsDAO;
-import ir.fanfoot.util.*;
 import ir.fanfoot.domain.News;
 import ir.fanfoot.domain.NewsAgency;
+import ir.fanfoot.util.atom.FeedFetcher;
+import ir.fanfoot.util.atom.FeedItem;
+import ir.fanfoot.util.graphics.ImageResizer;
+import ir.fanfoot.util.http.HttpDownloader;
+import ir.fanfoot.util.i18n.StringHelper;
 import org.apache.commons.io.FilenameUtils;
 
 import javax.ejb.EJB;
@@ -14,7 +18,6 @@ import javax.ejb.Singleton;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,6 +82,7 @@ public class Varzesh3FetcherEJB {
                         newsDAO.saveOrUpdate(news);
                         getNewsStuff(news);
                         tagAssignerEJB.assignTags(news);
+                        newsDAO.saveOrUpdate(news);
                     }
                 }
             }

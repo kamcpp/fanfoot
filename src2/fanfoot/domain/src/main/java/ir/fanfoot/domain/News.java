@@ -1,5 +1,7 @@
 package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.EnglishNumbers;
+import ir.fanfoot.annotations.PersianNumbers;
 import ir.fanfoot.annotations.Sorted;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,12 +22,16 @@ public class News {
     @org.hibernate.annotations.Type(type = "pg-uuid")
     @Column(columnDefinition = "uuid")
     private UUID id;
+    @PersianNumbers
     @Column(name = "title", length = 1024, nullable = false)
     private String title;
+    @EnglishNumbers
     @Column(name = "source_id", length = 512, nullable = true)
     private String sourceId;
+    @PersianNumbers
     @Column(name = "short_description", length = 2048, nullable = true)
     private String shortDescription;
+    @PersianNumbers
     @Column(name = "full_description", length = 204800, nullable = true)
     private String fullDescription;
     @Column(name = "author", length = 1024, nullable = true)
@@ -37,14 +43,19 @@ public class News {
     private long publishDate;
     @Column(name = "number_of_visitors", nullable = false)
     private int numberOfVisits;
+    @EnglishNumbers
     @Column(name = "source_link", length = 2048, nullable = true)
     private String sourceLink;
+    @EnglishNumbers
     @Column(name = "image_file_extension", length = 64, nullable = true)
     private String imageFileExtension;
+    @EnglishNumbers
     @Column(name = "video_file_extension", length = 64, nullable = true)
     private String videoFileExtension;
+    @EnglishNumbers
     @Column(name = "image_link", length = 2048, nullable = true)
     private String imageLink;
+    @EnglishNumbers
     @Column(name = "video_link", length = 2048, nullable = true)
     private String videoLink;
     @Column(name = "has_image", nullable = false)

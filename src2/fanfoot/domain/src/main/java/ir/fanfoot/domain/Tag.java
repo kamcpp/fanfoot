@@ -1,5 +1,6 @@
 package ir.fanfoot.domain;
 
+import ir.fanfoot.annotations.PersianNumbers;
 import ir.fanfoot.annotations.Sorted;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,9 +17,11 @@ public class Tag {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @org.hibernate.annotations.Type(type = "pg-uuid")
     private UUID id;
+    @PersianNumbers
     @Sorted(order = 1, sort = Sorted.Sort.ASCENDING)
     @Column(name = "name", length = 1024, nullable = false)
     private String name;
+    @PersianNumbers
     @Column(name = "keywords", length = 5120, nullable = true)
     private String keywords;
 

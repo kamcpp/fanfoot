@@ -1,10 +1,12 @@
-package ir.fanfoot.util;
+package ir.fanfoot.util.atom;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
+import ir.fanfoot.util.atom.FeedFetcher;
+import ir.fanfoot.util.atom.FeedItem;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
