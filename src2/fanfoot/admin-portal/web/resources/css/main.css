@@ -1,7 +1,7 @@
 * {
     margin: 0px;
     padding: 0px;
-    font-family: Verdana, Tahoma;
+    font-family: yekan, Verdana, Tahoma;
     font-weight: 300;
     font-size: 13px;
 }
@@ -18,13 +18,14 @@ button {
     padding-top: 5px;
     padding-bottom: 5px;
     color: #303030;
-    font-family: Verdana, Tahoma;
+    font-family: yekan, Verdana, Tahoma;
     font-size: 15px;
     font-weight: bold;
 }
 
-.news-management-button span {
+.entity-management-button span {
     font-size: 10px;
+    font-family: yekan, Verdana, Tahoma;
 }
 
 .ltr {

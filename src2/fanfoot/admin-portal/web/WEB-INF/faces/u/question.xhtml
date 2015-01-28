@@ -11,28 +11,29 @@
 <h:body>
     <ui:composition template="../templates/layout.xhtml">
         <ui:define name="head">
-            <title>برچسب ها - پنل مدیریت فن فوت</title>
+            <title>سوالات - پنل مدیریت فن فوت</title>
         </ui:define>
         <ui:define name="content">
-            <h1 style="float: right;" class="heading">برچسب ها</h1>
+            <h1 style="float: right;" class="heading">سوالات</h1>
             <br/>
             <br/>
             <h:form styleClass="ltr" id="form-list">
                 <div style="direction: rtl; float: right;">
-                    برای جست و جوی برچسب بخشی از نام آن یا کلمه کلیدی آن را وارد نمایید
+                    برای جست و جوی سوال بخشی از متن سوال و یا گزینه های آن را در بخش زیر وارد کنید
                     <br/>
                     <br/>
-                    <p:inputText value="#{tagBean.searchText}"/>
-                    <p:commandButton value="جست و جو" actionListener="#{tagBean.search()}" update="list-dt"/>
+                    <p:inputText value="#{questionBean.searchText}"/>
+                    <p:commandButton value="جست و جو" actionListener="#{questionBean.search()}" update="list-dt"/>
                 </div>
                 <br/>
                 <br/>
-                <p:commandButton update=":edit-dialog" value="برچسب جدید"
-                                 actionListener="#{tagBean.prepareForAdd()}"
+                <p:commandButton update=":edit-dialog" value="سوال جدید"
+                                 actionListener="#{questionBean.prepareForAdd()}"
                                  oncomplete="PF('editDialog').show();"/>
-                <p:commandButton value="نمایش همه و بروزرسانی" actionListener="#{tagBean.init()}" update="list-dt"/>
+                <p:commandButton value="نمایش همه و بروزرسانی" actionListener="#{questionBean.init()}"
+                                 update="list-dt"/>
                 <br/>
-                <p:dataTable id="list-dt" var="tag" value="#{tagBean.dataModel}"
+                <p:dataTable id="list-dt" var="question" value="#{questionBean.dataModel}"
                              lazy="true" paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                              rowsPerPageTemplate="5,10,20,50,100"
@@ -41,34 +42,36 @@
                         <p:commandButton styleClass="entity-management-button" value="حذف"
                                          onclick="return confirm('Are you sure?');"
                                          update=":form-list:list-dt"
-                                         actionListener="#{tagBean.delete(tag.id)}"/>
+                                         actionListener="#{questionBean.delete(question.id)}"/>
                         <p:commandButton styleClass="entity-management-button" value="ویرایش" update=":edit-dialog"
-                                         actionListener="#{tagBean.select(tag.id)}"
+                                         actionListener="#{questionBean.select(question.id)}"
                                          oncomplete="PF('editDialog').show();"/>
                     </p:column>
-                    <p:column headerText="کلمات کلیدی" style="text-align: center">
-                        <h:outputText value="#{tag.keywords}"/>
+                    <p:column headerText="متن فارسی سوال" style="text-align: right">
+                        <h:outputText value="#{question.localText}"/>
                     </p:column>
-                    <p:column headerText="نام برچسب" style="text-align: center">
-                        <h:outputText value="#{tag.name}"/>
+                    <p:column headerText="متن انگلیسی سوال" style="text-align: left; direction: ltr;">
+                        <h:outputText value="#{question.englishText}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>
-            <p:dialog id="edit-dialog" header="فرم ویرایش برچسب" dir="rtl" widgetVar="editDialog"
+            <p:dialog id="edit-dialog" header="فرم ویرایش سوال" dir="rtl" widgetVar="editDialog"
                       modal="true" appendToBody="true" width="450px" height="250px"
                       closable="false" resizable="false">
                 <h:form>
                     <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
                     <p:panelGrid columns="2">
-                        شناسه <p:inputText value="#{tagBean.tag.id}" readonly="true"/><br/>
-                        نام <p:inputText value="#{tagBean.tag.name}" required="true"
-                                         requiredMessage="Name is required."/><br/>
-                        کلمات کلیدی <p:inputTextarea value="#{tagBean.tag.keywords}" required="false"/><br/>
+                        شناسه <p:inputText value="#{questionBean.question.id}" readonly="true"/><br/>
+                        متن فارسی سوال<p:inputText value="#{questionBean.question.localText}" required="true"
+                                                   requiredMessage="Local text is required."/><br/>
+                        متن انگلیسی سوال<p:inputTextarea value="#{questionBean.question.englishText}"
+                                                         dir="ltr"
+                                                          required="true" requiredMessage="English text is required."/><br/>
                         <p:row>
                             <p:commandButton value="لغو" style="color: red;"
                                              onclick="PF('editDialog').hide();"/>
                             <p:commandButton value="ذخیره" style="color: green;" update="growl,:form-list:list-dt"
-                                             actionListener="#{tagBean.saveOrUpdate()}"
+                                             actionListener="#{questionBean.saveOrUpdate()}"
                                              oncomplete="handleResponse(xhr, status, args);"/>
                         </p:row>
                     </p:panelGrid>
