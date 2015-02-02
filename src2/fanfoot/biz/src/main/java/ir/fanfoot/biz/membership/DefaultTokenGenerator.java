@@ -1,6 +1,10 @@
-package ir.fanfoot.biz.membership.impl;
+package ir.fanfoot.biz.membership;
 
-import ir.fanfoot.biz.membership.*;
+import ir.fanfoot.biz.membership.FanFootToken;
+import org.labcrypto.membership.Credential;
+import org.labcrypto.membership.Principal;
+import org.labcrypto.membership.Token;
+import org.labcrypto.membership.TokenGenerator;
 
 import java.util.Date;
 

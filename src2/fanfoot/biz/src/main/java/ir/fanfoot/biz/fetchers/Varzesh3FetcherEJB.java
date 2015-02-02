@@ -5,12 +5,13 @@ import ir.fanfoot.biz.dao.NewsAgencyDAO;
 import ir.fanfoot.biz.dao.NewsDAO;
 import ir.fanfoot.domain.News;
 import ir.fanfoot.domain.NewsAgency;
-import ir.fanfoot.util.atom.FeedFetcher;
-import ir.fanfoot.util.atom.FeedItem;
-import ir.fanfoot.util.graphics.ImageResizer;
-import ir.fanfoot.util.http.HttpDownloader;
-import ir.fanfoot.util.i18n.StringHelper;
+
 import org.apache.commons.io.FilenameUtils;
+import org.labcrypto.util.atom.FeedFetcher;
+import org.labcrypto.util.atom.FeedItem;
+import org.labcrypto.util.graphics.ImageResizer;
+import org.labcrypto.util.http.HttpDownloader;
+import org.labcrypto.util.i18n.StringHelper;
 
 import javax.ejb.EJB;
 import javax.ejb.Schedule;

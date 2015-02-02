@@ -1,7 +1,8 @@
-package ir.fanfoot.biz.membership.impl;
+package ir.fanfoot.biz.membership;
 
-import ir.fanfoot.biz.membership.Credential;
-import ir.fanfoot.biz.membership.MembershipPolicy;
+
+import org.labcrypto.membership.Credential;
+import org.labcrypto.membership.MembershipPolicy;
 
 public class DefaultMembershipPolicy implements MembershipPolicy {
 
@@ -12,16 +13,13 @@ public class DefaultMembershipPolicy implements MembershipPolicy {
 
     @Override
     public void submitAuthenticateRequest(Credential credential) {
-
     }
 
     @Override
     public void submitAuthenticationFailure(Credential credential) {
-
     }
 
     @Override
     public void submitAuthenticationSuccess(Credential credential) {
-
     }
 }

@@ -1,7 +1,8 @@
 package ir.fanfoot.biz.dao;
 
 import ir.fanfoot.domain.User;
-import ir.fanfoot.util.i18n.StringHelper;
+
+import org.labcrypto.util.i18n.StringHelper;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;

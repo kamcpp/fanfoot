@@ -1,8 +1,8 @@
 package ir.fanfoot.biz.fetchers;
 
-import ir.fanfoot.util.http.HttpDownloader;
-import ir.fanfoot.util.http.HttpDownloaderImpl;
-import ir.fanfoot.util.i18n.StringHelper;
+import org.labcrypto.util.http.HttpDownloader;
+import org.labcrypto.util.http.HttpDownloaderImpl;
+import org.labcrypto.util.i18n.StringHelper;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

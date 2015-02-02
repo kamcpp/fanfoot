@@ -1,10 +1,10 @@
-package ir.fanfoot.biz.membership.impl;
+package ir.fanfoot.biz.membership;
 
 import ir.fanfoot.biz.dao.TokenDAO;
 import ir.fanfoot.biz.membership.FanFootToken;
-import ir.fanfoot.biz.membership.Token;
-import ir.fanfoot.biz.membership.TokenNotFoundException;
-import ir.fanfoot.biz.membership.TokenRepository;
+import org.labcrypto.membership.Token;
+import org.labcrypto.membership.TokenNotFoundException;
+import org.labcrypto.membership.TokenRepository;
 
 import javax.ejb.EJB;
 import java.util.Date;

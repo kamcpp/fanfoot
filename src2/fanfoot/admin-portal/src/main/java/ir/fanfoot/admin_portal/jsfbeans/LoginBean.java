@@ -1,7 +1,9 @@
 package ir.fanfoot.admin_portal.jsfbeans;
 
-import ir.fanfoot.biz.membership.*;
-import ir.fanfoot.util.crypto.HashProvider;
+import org.labcrypto.membership.Membership;
+import org.labcrypto.membership.Token;
+import org.labcrypto.membership.UsernamePasswordCredential;
+import org.labcrypto.util.crypto.HashProvider;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;

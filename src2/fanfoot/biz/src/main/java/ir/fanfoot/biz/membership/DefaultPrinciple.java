@@ -1,9 +1,9 @@
-package ir.fanfoot.biz.membership.impl;
+package ir.fanfoot.biz.membership;
 
 import ir.fanfoot.biz.membership.FanFootRole;
-import ir.fanfoot.biz.membership.Principal;
-import ir.fanfoot.biz.membership.Role;
 import ir.fanfoot.domain.User;
+import org.labcrypto.membership.Principal;
+import org.labcrypto.membership.Role;
 
 import java.util.ArrayList;
 import java.util.List;

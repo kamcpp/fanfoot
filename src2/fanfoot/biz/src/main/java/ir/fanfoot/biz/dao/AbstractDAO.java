@@ -3,7 +3,8 @@ package ir.fanfoot.biz.dao;
 import ir.fanfoot.annotations.EnglishNumbers;
 import ir.fanfoot.annotations.PersianNumbers;
 import ir.fanfoot.annotations.Sorted;
-import ir.fanfoot.util.i18n.StringHelper;
+
+import org.labcrypto.util.i18n.StringHelper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

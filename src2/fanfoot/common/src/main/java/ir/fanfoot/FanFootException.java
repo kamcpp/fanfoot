@@ -1,6 +1,9 @@
 package ir.fanfoot;
 
-public class FanFootException extends Exception {
+import org.labcrypto.LabCryptoException;
+
+public class FanFootException extends LabCryptoException {
+
     public FanFootException() {
     }
 

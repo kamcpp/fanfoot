@@ -4,9 +4,10 @@ import ir.fanfoot.biz.Configuration;
 import ir.fanfoot.biz.dao.NewsDAO;
 import ir.fanfoot.biz.dao.TagDAO;
 import ir.fanfoot.domain.Tag;
-import ir.fanfoot.util.graphics.ImageResizer;
 import ir.fanfoot.domain.News;
-import ir.fanfoot.util.i18n.DateTimeHelper;
+
+import org.labcrypto.util.graphics.ImageResizer;
+import org.labcrypto.util.i18n.DateTimeHelper;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
@@ -124,20 +125,19 @@ public class NewsBean {
             String delimiter = "";
             for (Tag tag : tags) {
                 result += delimiter + tag.getName();
-                delimiter = ",";
+                delimiter = " | ";
             }
         }
         return result;
     }
 
     public void setTags(String text) {
-        String[] tokens = text.split(",");
+        String[] tokens = text.split("\\|");
         news.getTags().clear();
         newsDAO.addTags(news, tokens);
     }
 
     public void imageUpload(FileUploadEvent fileUploadEvent) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
         String extension;
         switch (fileUploadEvent.getFile().getContentType().toLowerCase()) {
             case "image/jpeg":

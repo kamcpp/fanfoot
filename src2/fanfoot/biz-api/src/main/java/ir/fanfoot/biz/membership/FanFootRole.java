@@ -1,15 +1,10 @@
 package ir.fanfoot.biz.membership;
 
-public class FanFootRole implements Role {
+import org.labcrypto.membership.LabCryptoRole;
 
-    private String name;
+public class FanFootRole extends LabCryptoRole {
 
     public FanFootRole(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        super(name);
     }
 }

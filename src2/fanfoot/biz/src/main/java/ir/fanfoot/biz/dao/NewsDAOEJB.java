@@ -3,7 +3,8 @@ package ir.fanfoot.biz.dao;
 import ir.fanfoot.domain.News;
 import ir.fanfoot.domain.NewsAgency;
 import ir.fanfoot.domain.Tag;
-import ir.fanfoot.util.i18n.StringHelper;
+
+import org.labcrypto.util.i18n.StringHelper;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -77,20 +78,14 @@ public class NewsDAOEJB extends AbstractDAO<News> implements NewsDAO {
         for (String tagString : tagStrings) {
             tagString = tagString.trim().toLowerCase();
             if (tagString.length() > 0) {
-                String[] tokens = tagString.split("@"); // TODO Parse or not to parse with whitespace! Don't remove this line!
-                for (String token : tokens) {
-                    String tagName = token.trim();
-                    if (tagName.length() > 0) {
-                        Tag tag = tagDAO.getByName(tagName);
-                        if (tag == null) {
-                            Tag newTag = new Tag();
-                            newTag.setName(tagName);
-                            tagDAO.saveOrUpdate(newTag);
-                            tag = newTag;
-                        }
-                        news.getTags().add(tag);
-                    }
+                Tag tag = tagDAO.getByName(tagString);
+                if (tag == null) {
+                    Tag newTag = new Tag();
+                    newTag.setName(tagString);
+                    tagDAO.saveOrUpdate(newTag);
+                    tag = newTag;
                 }
+                news.getTags().add(tag);
             }
         }
     }

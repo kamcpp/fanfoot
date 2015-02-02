@@ -29,6 +29,9 @@
         <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
         <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
         <element id="library" level="project" name="Maven: com.ibm.icu:icu4j:53.1" />
+        <element id="library" level="project" name="Maven: org.labcrypto:common:1.0.0" />
+        <element id="library" level="project" name="Maven: org.labcrypto:membership-api:1.0.0" />
+        <element id="library" level="project" name="Maven: org.labcrypto:membership:1.0.0" />
       </element>
       <element id="artifact" artifact-name="biz" />
       <element id="artifact" artifact-name="admin-portal" />

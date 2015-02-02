@@ -1,10 +1,9 @@
-package ir.fanfoot.biz.membership.impl;
+package ir.fanfoot.biz.membership;
 
 import ir.fanfoot.biz.dao.TokenDAO;
 import ir.fanfoot.biz.dao.UserDAO;
-import ir.fanfoot.biz.membership.*;
-import ir.fanfoot.biz.membership.Token;
-import ir.fanfoot.domain.*;
+import ir.fanfoot.domain.User;
+import org.labcrypto.membership.*;
 
 import javax.ejb.EJB;
 
