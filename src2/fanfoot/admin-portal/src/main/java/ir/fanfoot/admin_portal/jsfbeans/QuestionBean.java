@@ -2,6 +2,7 @@ package ir.fanfoot.admin_portal.jsfbeans;
 
 import ir.fanfoot.biz.dao.OptionDAO;
 import ir.fanfoot.biz.dao.QuestionDAO;
+import ir.fanfoot.domain.Option;
 import ir.fanfoot.domain.Question;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
@@ -26,9 +27,18 @@ public class QuestionBean {
     @EJB
     private OptionDAO optionDAO;
 
+    private UUID selectedOption;
     private Question question;
     private LazyDataModel<Question> dataModel;
     private String searchText;
+
+    public UUID getSelectedOption() {
+        return selectedOption;
+    }
+
+    public void setSelectedOption(UUID selectedOption) {
+        this.selectedOption = selectedOption;
+    }
 
     public Question getQuestion() {
         return question;
@@ -90,5 +100,9 @@ public class QuestionBean {
                 return allPaged;
             }
         };
+    }
+
+    public List<Option> selectOptionsForQuestion(UUID questionId) {
+        return optionDAO.getByQuestionId(questionId);
     }
 }

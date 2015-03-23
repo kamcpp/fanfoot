@@ -56,7 +56,7 @@
                 </p:dataTable>
             </h:form>
             <p:dialog id="edit-dialog" header="فرم ویرایش سوال" dir="rtl" widgetVar="editDialog"
-                      modal="true" appendToBody="true" width="450px" height="250px"
+                      modal="true" appendToBody="true" width="650px" height="350px"
                       closable="false" resizable="false">
                 <h:form>
                     <p:growl id="growl" sticky="false" showDetail="true" life="2000"/>
@@ -66,13 +66,46 @@
                                                    requiredMessage="Local text is required."/><br/>
                         متن انگلیسی سوال<p:inputTextarea value="#{questionBean.question.englishText}"
                                                          dir="ltr"
-                                                          required="true" requiredMessage="English text is required."/><br/>
+                                                         required="true"
+                                                         requiredMessage="English text is required."/><br/>
+                        گزینه های سوال<br/>
+                        <p:commandButton update=":option-edit-dialog" value="گزینه جدید"
+                                         actionListener="#{optionBean.prepareForAdd(questionBean.question)}"
+                                         oncomplete="PF('optionEditDialog').show();"/><br/>
+                        <p:dataTable id="list-options-dt" var="option"
+                                     value="#{questionBean.selectOptionsForQuestion(questionBean.question.id)}"
+                                     scrollable="true" scrollHeight="50"
+                                     style="width: 400px;"
+                                     scrollWidth="400px">
+                            <p:column headerText="متن فارسی گزینه" style="text-align: right;">
+                                <h:outputText value="#{option.localText}"/>
+                            </p:column>
+                            <p:column headerText="متن انگلیسی گزینه" style="text-align: left;">
+                                <h:outputText value="#{option.englishText}"/>
+                            </p:column>
+
+                        </p:dataTable>
                         <p:row>
                             <p:commandButton value="لغو" style="color: red;"
                                              onclick="PF('editDialog').hide();"/>
                             <p:commandButton value="ذخیره" style="color: green;" update="growl,:form-list:list-dt"
                                              actionListener="#{questionBean.saveOrUpdate()}"
                                              oncomplete="handleResponse(xhr, status, args);"/>
+                        </p:row>
+                    </p:panelGrid>
+                </h:form>
+                <h:form id="option-edit-dialog" header="فرم ویرایش گزینه سوال"
+                        dir="rtl" widgetVar="optionEditDialog"
+                        modal="true" appendToBody="true" width="650px" height="250px"
+                        closable="false" resizable="false">
+                    <p:growl id="optionGrowl" sticky="false" showDetail="true" life="2000"/>
+                    <p:panelGrid columns="2">
+                        <p:row>
+                            <p:commandButton value="لغو" style="color: red;"
+                                             onclick="PF('optionEditDialog').hide();"/>
+                            <p:commandButton value="ذخیره" style="color: green;" update="optionGrowl,:form-list:list-dt"
+                                             actionListener="#{optionBean.saveOrUpdate()}"
+                                             oncomplete="handleResponseForOption(xhr, status, args);"/>
                         </p:row>
                     </p:panelGrid>
                 </h:form>
@@ -83,6 +116,14 @@
                         }
                         else {
                             PF('editDialog').hide();
+                        }
+                    }
+                    function handleResponseForOption(xhr, status, args) {
+                        if (args.validationFailed || !args.processed) {
+                            PF('optionEditDialog').jq.effect("shake", {times: 5}, 100);
+                        }
+                        else {
+                            PF('optionEditDialog').hide();
                         }
                     }
                 </script>
